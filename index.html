@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&family=DM+Mono&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css" id="theme">
   <style>
@@ -175,6 +176,25 @@
     .big-num-label { font-size: 0.52em; opacity: 0.7; margin-top: 0.15em; }
     .stats-row { display: flex; gap: 1.8em; margin-top: 0.5em; }
 
+    .title-slide { position: relative; }
+    .title-slide .slide-content {
+      position: relative;
+      z-index: 2;
+    }
+    .title-slide #p5-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.45;
+    }
+    .title-slide #p5-container canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
     .title-slide h1 { font-size: 2.5em; line-height: 1.05; }
     .subtitle {
       font-family: 'DM Sans', sans-serif;
@@ -243,51 +263,83 @@
       <!-- SLIDE 1: TITLE                               -->
       <!-- ============================================ -->
       <section class="title-slide">
-        <div class="color-bar">
-          <span style="background:var(--pink)"></span>
-          <span style="background:var(--yellow)"></span>
-          <span style="background:var(--orange)"></span>
-          <span style="background:var(--lime)"></span>
-          <span style="background:var(--teal)"></span>
-          <span style="background:var(--purple)"></span>
+        <div id="p5-container"></div>
+        <div class="slide-content">
+          <div class="color-bar">
+            <span style="background:var(--pink)"></span>
+            <span style="background:var(--yellow)"></span>
+            <span style="background:var(--orange)"></span>
+            <span style="background:var(--lime)"></span>
+            <span style="background:var(--teal)"></span>
+            <span style="background:var(--purple)"></span>
+          </div>
+          <h1>The <span class="accent-yellow">Antigravity</span> Machine</h1>
+          <p class="subtitle">
+            Escaping Convergence and Scaffolding<br>Artistic Plurality in AI
+          </p>
+          <div>
+            <span class="funding-badge">AHRC + SSHRC · Doing AI Differently</span>
+          </div>
+          <p style="font-size:0.42em; opacity:0.55; margin-top:1em; font-family:'Space Mono',monospace;">
+            Phoenix Perry · UK Research Lead · CCI, University of the Arts London<br>
+            Stephen DiPaola · Canada Research Lead · Simon Fraser University<br>
+            <span style="opacity:0.6">Megan Boler · Ian Garrett · Charmi Patel · Matthew Plummer-Fernandez</span><br>
+            <span style="opacity:0.45; margin-top:0.3em; display:inline-block;">23 April 2026</span>
+          </p>
         </div>
-        <h1>The <span class="accent-yellow">Antigravity</span> Machine</h1>
-        <p class="subtitle">
-          Escaping Convergence and Scaffolding<br>Artistic Plurality in AI
-        </p>
-        <div>
-          <span class="funding-badge">AHRC + SSHRC · Doing AI Differently</span>
-        </div>
-        <p style="font-size:0.42em; opacity:0.55; margin-top:1em; font-family:'Space Mono',monospace;">
-          Phoenix Perry · CCI, University of the Arts London<br>
-          23 April 2026
-        </p>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 2: PROMPT 1 — THE PROBLEM               -->
+      <!-- SLIDE 2: WHY THIS MATTERS                      -->
       <!-- ============================================ -->
       <section>
-        <div class="prompt-tag">PROMPT 1 · THE PROBLEM AND THE STAKES</div>
-        <h2><span class="accent-pink">Current AI tools drive towards dominate cultural narratives</span></h2>
+        <div class="prompt-tag">PROMPT 1 · WHY THIS MATTERS</div>
+        <h2 style="font-size:1.8em; line-height:1.15; margin-top:0.3em;"><span class="accent-pink">Generative AI is reshaping culture.</span><br><span style="opacity:0.5">Artists have no seat at the table.</span></h2>
         <div class="color-bar">
           <span style="background:var(--pink)"></span>
           <span style="background:var(--pink); opacity:0.5"></span>
           <span style="background:var(--pink); opacity:0.2"></span>
         </div>
-         <p>Artists, designers, and communities are losing their cultural voice to AI systems built to resolve rather than explore. </p> <p>Commerical prompt driven systems have reward structures pulling relentlessly toward dominant cultural attractors and away from the particular, the contested, and the marginalised.</p> 
-        <!-- <p>We build tools that let people navigate, map, and reclaim authorship within these spaces.</p><p>Generative AI is being embedded into creative and cultural infrastructure at speed. And these systems are architecturally incapable of supporting the practices they claim to serve.</p>
-        -->
-        <p>This is happening because poplar GenAI models optimise for rapid, statistically confident, resolved outputs. They automate the very phase of creative work that matters most: the exploratory, iterative, meaning-making process through which artists develop original ideas and surface marginalised narratives.</p>
-        
+        <p>These systems are being embedded into creative and cultural infrastructure at speed. They are trained on massive datasets that frequently include copyrighted and culturally sensitive work without attribution or consent. They rely on weak captioning frameworks that misidentify and misrepresent cultural and historical material. And they are architecturally incapable of supporting the creative practices they claim to serve.</p>
+        <p>Popular GenAI models optimise for rapid, statistically confident, resolved outputs. They automate the very phase of creative work that matters most: the exploratory, iterative, meaning-making process through which artists develop original ideas and surface narratives that dominant culture ignores.</p>
         <div class="card pink" style="margin-top:0.4em">
-          <p style="margin:0; font-size:0.6em;">This is not a set of separate technical problems. It is a <strong>single systemic failure</strong>, rooted in one foundational design assumption: that the purpose of AI is to <span class="accent-pink">resolve</span> rather than to <span class="accent-lime">explore</span>.</p>
+          <p style="margin:0; font-size:0.62em;">This is not a set of separate technical problems. It is a <strong>single systemic failure</strong>, rooted in one foundational design assumption: that the purpose of AI is to <span class="accent-pink">resolve</span> rather than to <span class="accent-lime">explore</span>.</p>
         </div>
-        <p style="font-size:0.55em; opacity:0.7; margin-top:0.4em;">Arts scholarship has been almost entirely excluded from how these systems are designed. Creative practitioners are being economically undermined by tools that were never built for them. The environmental cost of compute-intensive, single-output architectures remains unaddressed. All of this is compounding.</p>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 3: GRAVITY WELLS + SEMANTIC MYOPIA       -->
+      <!-- SLIDE 3: SO WHAT — THE CONCRETE STAKES          -->
+      <!-- ============================================ -->
+      <section>
+        <div class="prompt-tag">PROMPT 1 · SO WHAT</div>
+        <h2><span class="accent-red" style="color:var(--red)">The damage is compounding</span></h2>
+        <div class="color-bar">
+          <span style="background:var(--red)"></span>
+          <span style="background:var(--red); opacity:0.5"></span>
+          <span style="background:var(--red); opacity:0.2"></span>
+        </div>
+        <div class="concept-grid">
+          <div class="concept card pink">
+            <div class="term accent-pink">Representation is shrinking</div>
+            <div class="def">Every model trained on the dominant web corpus compresses marginalised narratives and amplifies majority-culture defaults. The more these tools are used, the narrower the representational space becomes. Contested, complex, historically nuanced stories are being made computationally inaccessible.</div>
+          </div>
+          <div class="concept card orange">
+            <div class="term accent-orange">Systemic bias is being industrialised</div>
+            <div class="def">Rigid Acceptable Use Policies and alignment training enforce a single definition of "safe" that flattens culture wholesale. This is not a guardrail. It is a mechanism for cultural homogenisation operating at scale, laundering structural inequality through statistical confidence.</div>
+          </div>
+          <div class="concept card highlight">
+            <div class="term accent-yellow">Artists are being displaced from their own practice</div>
+            <div class="def">Creative practitioners are being economically undermined by tools that were never built for them, never trained with their consent, and never designed to support their process. The tools delegate where artists need to explore. They resolve where artists need to sit with ambiguity. They are replacing creative labour, not augmenting it.</div>
+          </div>
+          <div class="concept card" style="border-color:var(--red)">
+            <div class="term" style="color:var(--red)">The cost is environmental too</div>
+            <div class="def">Compute-intensive, high-resolution, single-output architectures carry an unsustainable environmental burden. And arts scholarship has been almost entirely excluded from how any of this gets designed. The people most affected have the least say.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- SLIDE 4: GRAVITY WELLS + SEMANTIC MYOPIA       -->
       <!-- ============================================ -->
       <section>
         <div class="prompt-tag">PROMPT 1 · THE PROBLEM, DEEPER</div>
@@ -554,6 +606,82 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+  <script>
+    // p5.js wave sketch in instance mode (from phoenixperry.com)
+    const waveSketch = function(p) {
+      let phase = 0;
+      let zoff = 0;
+      let waveStates = [];
+      const maxWaveStates = 25;
+      let colors = [];
+
+      p.setup = function() {
+        let container = document.getElementById('p5-container');
+        let cnv = p.createCanvas(container.offsetWidth, container.offsetHeight);
+        cnv.parent('p5-container');
+        colors = [
+          p.color('#a8e622'), p.color('#ffcc00'), p.color('#ff9505'),
+          p.color('#ff2d55'), p.color('#e91e63'), p.color('#af52de'),
+          p.color('#33cabb'), p.color('#007aff'), p.color('#030303'),
+          p.color('#f7f2dd')
+        ];
+      };
+
+      p.draw = function() {
+        p.background(0);
+        let mouseWaveHeight = p.map(p.mouseY, 0, p.height, 5, 100);
+        let currentState = [];
+
+        for (let i = 0; i < colors.length - 1; i++) {
+          let wavePoints = [];
+          let yOffset = i * 80;
+          for (let x = 0; x <= p.width; x += 10) {
+            let distanceFromMouse = p.abs(p.mouseX - x);
+            let defaultWaveHeight = distanceFromMouse < 20 ? mouseWaveHeight : 50;
+            let waveHeight = defaultWaveHeight;
+            let y = p.height / 2 + p.sin(x * 0.01 + phase * i) * waveHeight * p.noise(x * 0.01, yOffset * 0.1, zoff) + yOffset;
+            wavePoints.push({ x: x, y: y, color: colors[i] });
+          }
+          currentState.push(wavePoints);
+        }
+
+        waveStates.unshift(currentState);
+        if (waveStates.length > maxWaveStates) {
+          waveStates.pop();
+        }
+
+        waveStates.forEach((state, index) => {
+          state.forEach((wavePoints) => {
+            let col = p.color(
+              p.red(wavePoints[0].color),
+              p.green(wavePoints[0].color),
+              p.blue(wavePoints[0].color),
+              255 - (index * 10)
+            );
+            p.stroke(col);
+            p.noFill();
+            p.beginShape();
+            wavePoints.forEach(point => {
+              p.vertex(point.x, point.y);
+            });
+            p.endShape();
+          });
+        });
+
+        phase += 0.01;
+        zoff += 0.01;
+      };
+
+      p.windowResized = function() {
+        let container = document.getElementById('p5-container');
+        if (container) {
+          p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+        }
+      };
+    };
+
+    new p5(waveSketch);
+  </script>
   <script>
     Reveal.initialize({
       hash: true,
