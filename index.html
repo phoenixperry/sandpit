@@ -794,6 +794,7 @@
       let cols, rows, scl, terrain = [], flying = 0, xDrift = 0;
       let wells = [], worm, wormTrail = [], maxTrail;
       let isActive = false;
+      let canvasReady = false;
 
       let palette = [
         '#030303','#007aff','#33cabb','#a8e622','#fc0',
@@ -822,15 +823,24 @@
       }
 
       p.setup = function() {
+        // Don't create canvas yet — container is hidden and has 0 dimensions.
+        // Canvas will be created on first activation.
+        p.noCanvas();
+      };
+
+      function createTerrainCanvas() {
         let container = document.getElementById('terrain-container');
+        if (!container || container.offsetWidth === 0) return false;
         let cnv = p.createCanvas(container.offsetWidth, container.offsetHeight, p.WEBGL);
         cnv.parent('terrain-container');
         p.ortho();
         initScene();
-      };
+        canvasReady = true;
+        return true;
+      }
 
       p.draw = function() {
-        if (!isActive) return;
+        if (!isActive || !canvasReady) return;
         p.background(10);
         updateFlow();
         generateTerrain();
@@ -948,21 +958,26 @@
       }
 
       p.windowResized = function() {
+        if (!canvasReady) return;
         let container = document.getElementById('terrain-container');
-        if (container) {
+        if (container && container.offsetWidth > 0) {
           p.resizeCanvas(container.offsetWidth, container.offsetHeight);
           initScene();
         }
       };
 
-      // expose activation control — always resize on activation
+      // expose activation control — create canvas on first activation
       p.setActive = function(a) {
         isActive = a;
         if (a) {
-          let container = document.getElementById('terrain-container');
-          if (container && container.offsetWidth > 0) {
-            p.resizeCanvas(container.offsetWidth, container.offsetHeight);
-            initScene();
+          if (!canvasReady) {
+            createTerrainCanvas();
+          } else {
+            let container = document.getElementById('terrain-container');
+            if (container && container.offsetWidth > 0) {
+              p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+              initScene();
+            }
           }
         }
       };
