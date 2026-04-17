@@ -701,6 +701,8 @@
       let waveStates = [];
       const maxWaveStates = 25;
       let colors = [];
+      let waveActive = true;
+      let needsResize = false;
 
       p.setup = function() {
         let container = document.getElementById('p5-container');
@@ -714,7 +716,23 @@
         ];
       };
 
+      p.setActive = function(active) {
+        waveActive = active;
+        if (active) needsResize = true;
+      };
+
       p.draw = function() {
+        if (!waveActive) return;
+
+        // resize on reactivation to recover from 0×0
+        if (needsResize) {
+          let container = document.getElementById('p5-container');
+          if (container && container.offsetWidth > 0) {
+            p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+            needsResize = false;
+          }
+        }
+
         p.background(0);
         let mouseWaveHeight = p.map(p.mouseY, 0, p.height, 5, 100);
         let currentState = [];
@@ -760,14 +778,16 @@
       };
 
       p.windowResized = function() {
+        // only resize if currently active — avoids 0×0 canvas
+        if (!waveActive) { needsResize = true; return; }
         let container = document.getElementById('p5-container');
-        if (container) {
+        if (container && container.offsetWidth > 0) {
           p.resizeCanvas(container.offsetWidth, container.offsetHeight);
         }
       };
     };
 
-    new p5(waveSketch);
+    let waveP5 = new p5(waveSketch);
   </script>
   <script>
     // Gravity wells terrain sketch (instance mode)
@@ -1177,43 +1197,68 @@
       // ---------------------------------------------------
       function drawLissajous(col) {
         let cx = w * 0.5, cy = h * 0.5;
-        let rx = w * 0.48, ry = h * 0.47;
         let c = p.color(col);
-        let curves = 3;
+        let curves = 6;
 
         for (let curve = 0; curve < curves; curve++) {
-          // slowly drifting frequency ratios — the Whitney signature
-          let freqA = 2 + curve + Math.sin(t * 0.0001 + curve) * 0.5;
-          let freqB = 3 + curve * 0.7 + Math.cos(t * 0.00015 + curve) * 0.3;
-          let phaseShift = t * 0.0003 + curve * 1.2; // very slow phase drift
+          // each curve has its own evolving frequency pair — irrational-ish ratios
+          let freqA = 1.5 + curve * 0.8 + Math.sin(t * 0.00008 + curve * 1.9) * 0.7;
+          let freqB = 2.3 + curve * 0.6 + Math.cos(t * 0.00011 + curve * 2.3) * 0.6;
+          let phaseShift = t * 0.00018 + curve * 0.9;
+
+          // amplitude drifts per-curve — some sweep wider, some tighter
+          let ampDrift = Math.sin(t * 0.00006 + curve * 3.1);
+          let rxBase = w * (0.38 + curve * 0.04 + ampDrift * 0.12);
+          let ryBase = h * (0.36 + curve * 0.035 - ampDrift * 0.08);
 
           p.noFill();
-          let alpha = 140 + curve * 25;
+          let alpha = 90 + curve * 18;
           c.setAlpha(alpha);
           p.stroke(c);
-          p.strokeWeight(1.6 - curve * 0.2);
+          // thinner strokes for inner curves, thicker for outer — more variety
+          let baseWeight = 0.6 + (curves - curve) * 0.22;
+          p.strokeWeight(baseWeight);
 
           p.beginShape();
-          let steps = 800;
+          let steps = 1000;
           for (let i = 0; i <= steps; i++) {
-            let angle = (i / steps) * Math.PI * 2 * 4;
+            let frac = i / steps;
+            let angle = frac * Math.PI * 2 * 5;
+
+            // amplitude modulation along the curve — swells and narrows
+            let swell = 1 + 0.15 * Math.sin(angle * 1.3 + t * 0.0002 + curve);
+            let rx = rxBase * swell;
+            let ry = ryBase * (2 - swell); // counter-swell on y
+
             let x = cx + rx * Math.sin(freqA * angle + phaseShift);
             let y = cy + ry * Math.sin(freqB * angle);
+
+            // at the edges of the canvas, let curves escape and return
             p.vertex(x, y);
           }
           p.endShape();
+        }
 
-          // accent dots at harmonic nodes
-          p.noStroke();
-          let dotAlpha = 200 + curve * 30;
-          c.setAlpha(Math.min(dotAlpha, 255));
+        // wandering accent points — drift along evolving lissajous paths
+        p.noStroke();
+        for (let i = 0; i < 30; i++) {
+          let cIdx = i % curves;
+          let freqA = 1.5 + cIdx * 0.8 + Math.sin(t * 0.00008 + cIdx * 1.9) * 0.7;
+          let freqB = 2.3 + cIdx * 0.6 + Math.cos(t * 0.00011 + cIdx * 2.3) * 0.6;
+          let ps = t * 0.00018 + cIdx * 0.9;
+          let ad = Math.sin(t * 0.00006 + cIdx * 3.1);
+          let rxB = w * (0.38 + cIdx * 0.04 + ad * 0.12);
+          let ryB = h * (0.36 + cIdx * 0.035 - ad * 0.08);
+
+          let angle = (i / 30) * Math.PI * 2 * 5 + t * 0.0004;
+          let swell = 1 + 0.15 * Math.sin(angle * 1.3 + t * 0.0002 + cIdx);
+          let x = cx + rxB * swell * Math.sin(freqA * angle + ps);
+          let y = cy + ryB * (2 - swell) * Math.sin(freqB * angle);
+
+          let pulse = 3 + Math.sin(t * 0.002 + i * 0.8) * 2;
+          c.setAlpha(160 + Math.sin(t * 0.001 + i) * 60);
           p.fill(c);
-          for (let i = 0; i < 20; i++) {
-            let angle = (i / 20) * Math.PI * 2 * 4;
-            let x = cx + rx * Math.sin(freqA * angle + phaseShift);
-            let y = cy + ry * Math.sin(freqB * angle);
-            p.ellipse(x, y, 5, 5);
-          }
+          p.ellipse(x, y, pulse, pulse);
         }
       }
 
@@ -1267,49 +1312,70 @@
       // ---------------------------------------------------
       function drawOrbits(col) {
         let cx = w * 0.5, cy = h * 0.5;
-        let maxR = Math.min(w, h) * 0.4;
-        let orbits = 5;
-        let dotsPerOrbit = 24;
-        let speed = 0.0004; // slow orbital drift
+        let maxR = Math.max(w, h) * 0.52;
+        let orbits = 10;
+        let dotsPerOrbit = 32;
+        let speed = 0.0004;
         let c = p.color(col);
 
         for (let o = 0; o < orbits; o++) {
-          let radius = maxR * (0.15 + o * 0.18);
-          let orbitSpeed = speed / (o * 0.4 + 1); // inner orbits faster
+          let radius = maxR * (0.08 + o * 0.092);
+          let orbitSpeed = speed / (o * 0.35 + 1);
 
-          // orbit path
-          c.setAlpha(30);
+          // orbit path — eccentric ellipses tilted per ring
+          let tilt = o * 0.3 + Math.sin(t * 0.00015 + o) * 0.2;
+          let eccX = 1 + 0.15 * Math.sin(t * 0.0004 + o * 1.2);
+          let eccY = 1 - 0.15 * Math.sin(t * 0.0004 + o * 1.2);
+
+          c.setAlpha(25 + o * 3);
           p.stroke(c);
-          p.strokeWeight(0.6);
+          p.strokeWeight(0.5);
           p.noFill();
-          p.ellipse(cx, cy, radius * 2, radius * 2);
+          // draw tilted ellipse path
+          p.push();
+          p.translate(cx, cy);
+          p.rotate(tilt);
+          p.ellipse(0, 0, radius * 2 * eccX, radius * 2 * eccY);
+          p.pop();
 
           // dots along orbit
           p.noStroke();
           for (let i = 0; i < dotsPerOrbit; i++) {
             let angle = t * orbitSpeed * (i + 1) + o * 1.5;
-            // slight eccentricity
-            let rx = radius * (1 + 0.1 * Math.sin(t * 0.0005 + o));
-            let ry = radius * (1 - 0.1 * Math.sin(t * 0.0005 + o));
-            let x = cx + rx * Math.cos(angle);
-            let y = cy + ry * Math.sin(angle);
+            let rx = radius * eccX;
+            let ry = radius * eccY;
+            // apply same tilt rotation
+            let lx = rx * Math.cos(angle);
+            let ly = ry * Math.sin(angle);
+            let x = cx + lx * Math.cos(tilt) - ly * Math.sin(tilt);
+            let y = cy + lx * Math.sin(tilt) + ly * Math.cos(tilt);
 
-            let alpha = 120 + 80 * Math.sin(t * 0.002 + i * 0.5 + o);
+            let alpha = 130 + 90 * Math.sin(t * 0.002 + i * 0.5 + o);
             c.setAlpha(alpha);
             p.fill(c);
-            let sz = 3 + Math.sin(t * 0.001 + i + o) * 1.5;
+            let sz = 3.5 + Math.sin(t * 0.001 + i + o) * 1.8;
             p.ellipse(x, y, sz, sz);
 
-            // connect dots to center — gravitational pull lines
-            if (i % 4 === 0) {
-              c.setAlpha(35);
+            // gravitational pull lines — more frequent on outer rings
+            if (i % 3 === 0) {
+              c.setAlpha(25 + o * 3);
               p.stroke(c);
-              p.strokeWeight(0.4);
+              p.strokeWeight(0.3);
               p.line(x, y, cx, cy);
               p.noStroke();
             }
           }
         }
+
+        // central attractor — pulsing core
+        let corePulse = 1 + Math.sin(t * 0.002) * 0.3;
+        c.setAlpha(50);
+        p.noStroke();
+        p.fill(c);
+        p.ellipse(cx, cy, 20 * corePulse, 20 * corePulse);
+        c.setAlpha(200);
+        p.fill(c);
+        p.ellipse(cx, cy, 6 * corePulse, 6 * corePulse);
       }
 
       // ---------------------------------------------------
@@ -1530,10 +1596,10 @@
       // like atmospheric pressure systems, wind lines, weather maps
       // ---------------------------------------------------
       let weatherParticles = [];
-      const WEATHER_COUNT = 300;
+      const WEATHER_COUNT = 400;
       let noiseField = null;
-      const NOISE_SCALE = 0.003;
-      const NOISE_Z_SPEED = 0.0003;
+      const NOISE_SCALE = 0.0025;
+      const NOISE_Z_SPEED = 0.00012;
       let noiseZ = 0;
 
       function initWeather() {
@@ -1544,20 +1610,20 @@
             y: Math.random() * h,
             px: 0, py: 0,       // previous position for trails
             age: Math.floor(Math.random() * 300),
-            maxAge: 200 + Math.floor(Math.random() * 250),
-            speed: 0.4 + Math.random() * 0.8
+            maxAge: 350 + Math.floor(Math.random() * 400),
+            speed: 0.2 + Math.random() * 0.4
           });
         }
       }
 
-      // simple Perlin-like noise using sine harmonics
+      // asymmetric noise — stretched horizontally for weather-front feel
       function flowNoise(x, y, z) {
-        // layer multiple sine waves at different frequencies for organic feel
         let v = 0;
-        v += Math.sin(x * 0.012 + z * 1.1) * Math.cos(y * 0.009 + z * 0.8);
-        v += Math.sin(x * 0.007 - y * 0.011 + z * 1.7) * 0.5;
-        v += Math.cos(x * 0.019 + y * 0.014 - z * 0.6) * 0.3;
-        v += Math.sin(x * 0.003 + y * 0.005 + z * 2.1) * 0.7;
+        v += Math.sin(x * 0.008 + z * 0.7) * Math.cos(y * 0.015 + z * 0.5);
+        v += Math.sin(x * 0.004 - y * 0.018 + z * 1.2) * 0.6;
+        v += Math.cos(x * 0.013 + y * 0.006 - z * 0.4) * 0.35;
+        v += Math.sin(x * 0.002 + y * 0.009 + z * 1.6) * 0.5;
+        v += Math.cos(x * 0.022 - y * 0.003 + z * 0.9) * 0.2;
         return v;
       }
 
@@ -1577,37 +1643,34 @@
           // flow angle from noise field
           let angle = flowNoise(pt.x * NOISE_SCALE, pt.y * NOISE_SCALE, noiseZ) * Math.PI * 2;
 
-          // add a slow large-scale drift (like a weather front moving)
-          angle += Math.sin(pt.y * 0.001 + noiseZ * 0.5) * 0.4;
+          // large-scale horizontal drift — like a weather front
+          angle += Math.sin(pt.y * 0.0006 + noiseZ * 0.3) * 0.3;
 
           pt.x += Math.cos(angle) * pt.speed;
           pt.y += Math.sin(angle) * pt.speed;
           pt.age++;
 
-          // fade based on age
+          // fade based on age — longer fade in/out
           let lifeFrac = pt.age / pt.maxAge;
-          let fade = lifeFrac < 0.1 ? lifeFrac / 0.1 :
-                     lifeFrac > 0.8 ? (1 - lifeFrac) / 0.2 : 1.0;
+          let fade = lifeFrac < 0.15 ? lifeFrac / 0.15 :
+                     lifeFrac > 0.75 ? (1 - lifeFrac) / 0.25 : 1.0;
           fade = Math.max(fade, 0);
 
-          // draw trail line
-          let alpha = fade * 140;
+          // draw trail as a short directional stroke (not a dot)
+          let alpha = fade * 120;
           c.setAlpha(alpha);
           p.stroke(c);
-          p.strokeWeight(1.2);
-          // only draw if previous pos is close (no wrap-around artifacts)
+          // vary weight — thinner strokes feel more textural
+          let weight = 0.5 + fade * 0.8 + Math.sin(pt.age * 0.03 + i) * 0.3;
+          p.strokeWeight(Math.max(weight, 0.3));
+
           let dx = pt.x - pt.px;
           let dy = pt.y - pt.py;
-          if (dx * dx + dy * dy < 100) {
+          if (dx * dx + dy * dy < 80) {
             p.line(pt.px, pt.py, pt.x, pt.y);
           }
 
-          // dot at head
-          p.noStroke();
-          c.setAlpha(alpha * 1.3);
-          p.fill(c);
-          let dotSz = 2.0 + fade * 1.5;
-          p.ellipse(pt.x, pt.y, dotSz, dotSz);
+          // no dot at head — just the stroke for texture
 
           // respawn if off-screen or too old
           if (pt.age > pt.maxAge || pt.x < -20 || pt.x > w + 20 || pt.y < -20 || pt.y > h + 20) {
@@ -1616,25 +1679,28 @@
             pt.px = pt.x;
             pt.py = pt.y;
             pt.age = 0;
-            pt.maxAge = 200 + Math.floor(Math.random() * 250);
-            pt.speed = 0.4 + Math.random() * 0.8;
+            pt.maxAge = 350 + Math.floor(Math.random() * 400);
+            pt.speed = 0.2 + Math.random() * 0.4;
           }
         }
 
-        // isobars — faint contour rings from the same noise field
-        c.setAlpha(30);
-        p.noFill();
+        // textural field marks — short dashes aligned to flow direction
+        c.setAlpha(20);
         p.stroke(c);
-        p.strokeWeight(0.6);
-        let step = 28;
+        let step = 35;
         for (let gx = 0; gx < w; gx += step) {
           for (let gy = 0; gy < h; gy += step) {
             let v = flowNoise(gx * NOISE_SCALE, gy * NOISE_SCALE, noiseZ);
-            // draw tiny marks where noise crosses thresholds (like isobars)
             let frac = v - Math.floor(v);
-            if (Math.abs(frac) < 0.08 || Math.abs(frac - 0.5) < 0.06) {
-              let sz = 3 + Math.abs(v) * 2;
-              p.ellipse(gx, gy, sz, sz);
+            if (Math.abs(frac) < 0.1 || Math.abs(frac - 0.5) < 0.07) {
+              // draw a short dash aligned to the flow angle
+              let a = v * Math.PI * 2;
+              let len = 4 + Math.abs(v) * 3;
+              p.strokeWeight(0.4);
+              p.line(
+                gx - Math.cos(a) * len, gy - Math.sin(a) * len,
+                gx + Math.cos(a) * len, gy + Math.sin(a) * len
+              );
             }
           }
         }
@@ -1850,6 +1916,10 @@
 
     // Unified slide-change handler for all sketch types
     function activateSlide(slide) {
+      // Wave sketch activation (title slide)
+      let isTitle = slide.classList.contains('title-slide');
+      waveP5.setActive(isTitle);
+
       // Terrain sketch activation
       let isTerrain = slide.querySelector('#terrain-container');
       terrainP5.setActive(!!isTerrain);
