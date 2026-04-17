@@ -177,6 +177,37 @@
     .big-num-label { font-size: 0.52em; opacity: 0.7; margin-top: 0.15em; }
     .stats-row { display: flex; gap: 1.8em; margin-top: 0.5em; }
 
+    /* Background sketch slides (shared by terrain + Whitney) */
+    .bg-sketch-slide { position: relative; }
+    .bg-sketch-slide .slide-content {
+      position: relative;
+      z-index: 2;
+    }
+    .bg-sketch-slide .sketch-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 1.0;
+    }
+    .bg-sketch-slide .sketch-bg canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* Sketch-backed slides: cards get dark bg and no border */
+    .bg-sketch-slide .card {
+      background-color: rgba(3, 3, 3, 0.85);
+      border: none;
+    }
+    .bg-sketch-slide .team-member {
+      background-color: rgba(3, 3, 3, 0.85);
+      border: none;
+    }
+
     .title-slide { position: relative; }
     .title-slide .slide-content {
       position: relative;
@@ -229,11 +260,11 @@
       margin-bottom: 0.2em;
     }
      .reveal .citation{
-      font-family: 'Space Mono', monospace; 
+      font-family: 'Space Mono', monospace;
       font-size: 0.3em;
-      color: var(--cream); 
-      opacity: 0.6; margin-top: 2em; 
-      line-height: 1.6; 
+      color: var(--cream);
+      opacity: 0.6; margin-top: 2em;
+      line-height: 1.6;
       border-left: 3px solid var(--pink); padding-left: 0.8em;
     }
     /* Responsive stacking for narrow viewports */
@@ -268,7 +299,7 @@
     <div class="slides">
 
       <!-- ============================================ -->
-      <!-- SLIDE 1: TITLE                               -->
+      <!-- SLIDE 0: TITLE                               -->
       <!-- ============================================ -->
       <section class="title-slide">
         <div id="p5-container"></div>
@@ -299,9 +330,11 @@
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 2: WHY THIS MATTERS                      -->
+      <!-- SLIDE 1: WHY THIS MATTERS                    -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="converge" data-whitney-color="#e91e63">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">PROMPT 1 · WHY THIS MATTERS</div>
         <h2 style="font-size:1.8em; line-height:1.15; margin-top:0.3em;"><span class="accent-pink">Generative AI is reshaping culture.</span></h2>
         <div class="color-bar">
@@ -309,18 +342,21 @@
           <span style="background:var(--pink); opacity:0.5"></span>
           <span style="background:var(--pink); opacity:0.2"></span>
         </div>
-         <p>Artists, designers, and communities are losing their cultural voice to AI systems built to resolve rather than explore. </p> <p>Commercial prompt driven systems have reward structures pulling relentlessly toward dominant cultural attractors and away from the particular, the contested, and the marginalised.</p> 
+         <p>Artists, designers, and communities are losing their cultural voice to AI systems built to resolve rather than explore. </p> <p>Commercial prompt driven systems have reward structures pulling relentlessly toward dominant cultural attractors and away from the particular, the contested, and the marginalised.</p>
         <p>Optimizing for rapid, statistically confident, resolved outputs, they automate the very phase of creative work that matters most: the exploratory, interpretive, meaning-making process through which artists develop original ideas and surface marginalised narratives.</p>
         <div class="card pink" style="margin-top:0.4em">
           <p style="margin:0; font-size:0.62em;">This is not a set of separate technical problems. It is a <strong>single systemic failure</strong>, rooted in one foundational design assumption: that the purpose of AI is to <span class="accent-pink">resolve</span> rather than to <span class="accent-lime">explore</span>.</p>
-           
+        </div>
+        </div>
       </section>
 
 
       <!-- ============================================ -->
-      <!-- SLIDE 3: SO WHAT — THE CONCRETE STAKES          -->
+      <!-- SLIDE 2: SO WHAT — THE CONCRETE STAKES        -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="matrix" data-whitney-color="#ff2d55">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">PROMPT 1 · SO WHAT</div>
         <h2><span class="accent-red" style="color:var(--red)">The Slow Cancellation of the Future: <br>This damage is recursive.</span></h2>
         <div class="color-bar">
@@ -347,12 +383,15 @@
           </div>
         </div>
         <div class="citation">Mark Fisher, <em>"The Slow Cancellation of the Future,"</em> <em>Ghosts of My Life: Writings on Depression, Hauntology and Lost Futures</em>, Zero Books, 2014</div>
+        </div>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 4: GRAVITY WELLS + SEMANTIC MYOPIA       -->
+      <!-- SLIDE 3: GRAVITY WELLS + SEMANTIC MYOPIA     -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="orbits" data-whitney-color="#ff9505">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">PROMPT 1 · THE PROBLEM, DEEPER</div>
         <h2><span class="accent-orange">Gravity wells and semantic myopia</span></h2>
         <div class="color-bar">
@@ -374,12 +413,15 @@
         <div class="card orange">
           <p style="font-size:0.5em; margin:0">We don't view gravity wells as inherently bad. They are contextual landmarks. But practitioners need mechanisms to <span class="accent-yellow">choose</span> how to engage with them or actively construct trajectories away.</p>
         </div>
-     </section>
+        </div>
+      </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 4: PROMPT 2 — THE REORIENTATION          -->
+      <!-- SLIDE 4: PROMPT 2 — THE REORIENTATION        -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="lissajous" data-whitney-color="#33cabb" data-whitney-opacity="0.5">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">PROMPT 2 · WHAT WE BUILD AND HOW WE DELIVER IT</div>
         <h2><span class="accent-teal">Lipstick Traces: Process over output</span></h2>
         <div class="color-bar">
@@ -393,12 +435,15 @@
           <p style="margin:0; font-size:0.58em;">By focusing on lightweight, modular, open architectures, we demonstrate that more <span class="accent-teal">interpretively honest</span> AI is also more <span class="accent-lime">sustainable</span> AI. We prioritise local deployment and adaptive compute.  Degrowth-compatible by design, these are models that can run on a consumer GPU, not a data centre. This is a direct technical alternative to the dominant prompt-based data harvesting paradigm of companies such as Google and OpenAI.</p>
         </div>
         <div class="citation">Greil Marcus, <em>Lipstick Traces: A Secret History of the Twentieth Century</em></div>
+        </div>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 5: WHY THIS WORKS — MET + EPISTEMIC ACTION -->
+      <!-- SLIDE 5: WHY THIS WORKS — MET + EPISTEMIC    -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="arabesque" data-whitney-color="#fc0">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">PROMPT 2 · THE THEORETICAL GROUND</div>
         <h2><span class="accent-yellow">Why tools shape creative thought</span></h2>
         <div class="color-bar">
@@ -415,20 +460,25 @@
         <p class="citation">Lambros Malafouris, <em>How Things Shape the Mind: A Theory of Material Engagement</em>, MIT Press, 2013</p>
         <p class="citation">Golding, Johnny; Reinhart, Martin; and Paganellli, Mattia, eds. 2021. Data Loam: Sometimes Hard, Usually Soft. The Future of Knowledge Systems. Berlin/Boston: De Gruyter.</p>
         <p class="citation">David Kirsh and Paul Maglio, <em>"On Distinguishing Epistemic from Pragmatic Action,"</em> Cognitive Science, 18(4), 513–549, 1994</p>
+        </div>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 6: WP2.1 — ANTI-GRAVITY TOOLKIT          -->
+      <!-- SLIDE 6: WP2.1 — ANTI-GRAVITY TOOL PROTOTYPE -->
       <!-- ============================================ -->
-      <section>
-        <div class="prompt-tag">PROMPT 2 · DELIVERABLE: WP2.1</div>
-        <h2><span class="accent-lime">The Anti-Gravity Navigation Toolkit</span></h2>
-        <div class="color-bar">
-          <span style="background:var(--lime)"></span>
-          <span style="background:var(--lime); opacity:0.5"></span>
-          <span style="background:var(--lime); opacity:0.2"></span>
+      <section class="bg-sketch-slide">
+        <div id="terrain-container" class="sketch-bg"></div>
+        <div class="slide-content">
+        <div style="background:rgba(3,3,3,0.85); padding:0.5em 0.7em; margin:0.4em 0;">
+          <div class="prompt-tag">PROMPT 2 · DELIVERABLE: WP2.1</div>
+          <h2><span class="accent-lime">The Anti-Gravity Tool Prototype</span></h2>
+          <div class="color-bar">
+            <span style="background:var(--lime)"></span>
+            <span style="background:var(--lime); opacity:0.5"></span>
+            <span style="background:var(--lime); opacity:0.2"></span>
+          </div>
+          <p style="font-size:0.6em; opacity:0.8; margin-bottom:0;">This directly addresses the dominant attractor problem in generative AI.</p>
         </div>
-        <p style="font-size:0.6em; opacity:0.8; margin-bottom:0.2em;">This directly addresses the dominant attractor problem in generative AI.</p>
         <div class="concept-grid">
           <div class="concept card lime">
             <div class="term accent-lime">Non-Linear Forking</div>
@@ -447,21 +497,25 @@
             <div class="def">Visualisation layer making convergence pressures legible. Showing practitioners where the system is pulling them and why. Turning an opaque statistical process into a navigational environment.</div>
           </div>
         </div>
-
+        </div>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 7: WP2.2 — LATENT STORYTELLING            -->
+      <!-- SLIDE 7: WP2.2 — LATENT STORYTELLING          -->
       <!-- ============================================ -->
-      <section>
-        <div class="prompt-tag">PROMPT 2 · DELIVERABLE: WP2.2</div>
-        <h2><span class="accent-purple">The Latent Storytelling Framework</span></h2>
-        <div class="color-bar">
-          <span style="background:var(--purple)"></span>
-          <span style="background:var(--purple); opacity:0.5"></span>
-          <span style="background:var(--purple); opacity:0.2"></span>
+      <section class="bg-sketch-slide" data-whitney="permutations" data-whitney-color="#af52de">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
+        <div style="background:rgba(3,3,3,0.85); padding:0.5em 0.7em; margin:0.4em 0;">
+          <div class="prompt-tag">PROMPT 2 · DELIVERABLE: WP2.2</div>
+          <h2><span class="accent-purple">The Latent Storytelling Framework</span></h2>
+          <div class="color-bar">
+            <span style="background:var(--purple)"></span>
+            <span style="background:var(--purple); opacity:0.5"></span>
+            <span style="background:var(--purple); opacity:0.2"></span>
+          </div>
+          <p style="font-size:0.6em; opacity:0.8; margin-bottom:0;">Latent space is not a style selector. It is a narrative environment. WP2.2 treats it as one.</p>
         </div>
-        <p style="font-size:0.6em; opacity:0.8; margin-bottom:0.2em;">Latent space is not a style selector. It is a narrative environment. WP2.2 treats it as one.</p>
         <div class="concept-grid">
           <div class="concept card purple">
             <div class="term accent-purple">Cultural Neighbourhood Mapping</div>
@@ -480,12 +534,15 @@
             <div class="def">Cohorting of conceptual pathways that lets users map plural gravity wells and control thematic drift through zeitgeist. Inspiration without plagiarism or appropriation.</div>
           </div>
         </div>
+        </div>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 8: EVALUATION + SUCCESS                   -->
+      <!-- SLIDE 8: EVALUATION + SUCCESS                 -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="matrix" data-whitney-color="#ff9505">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">PROMPT 2 · EVALUATION + MEASURING SUCCESS</div>
         <h2><span class="accent-orange">IDEA Framework + Critical Response Guide</span></h2>
         <div class="color-bar">
@@ -506,12 +563,15 @@
         <div class="card highlight" style="margin-top:0.4em">
           <p style="margin:0; font-size:0.56em;"><span class="accent-yellow">How we measure success:</span> Success is when the practitioner reports that our tools, frameworks, and guides helped them to <em>clarify their intent and expanded their exploratory space</em> rather than prematurely closing it. For example if journey maps are shared, they surface the interpretive creative processes. </p>
         </div>
+        </div>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 9: PUBLIC ENGAGEMENT + OUTPUTS            -->
+      <!-- SLIDE 9: PUBLIC ENGAGEMENT + OUTPUTS          -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="converge" data-whitney-color="#e91e63">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">PROMPT 2 · DISSEMINATION + REAL-WORLD IMPACT</div>
         <h2><span class="accent-pink">What this looks like in the world</span></h2>
         <div class="color-bar">
@@ -519,23 +579,26 @@
           <span style="background:var(--pink); opacity:0.5"></span>
           <span style="background:var(--pink); opacity:0.2"></span>
         </div>
-       
+
         <ul>
           <li><span class="accent-orange">A prototype of The AntiGravity Machine. </span> Software to allow for the real-time exploration of datasets, the creation of journey maps, and the ability to steer through datasets.</span>
           <li><span class="accent-pink">Public installation</span> co-designed with a cultural venue/festival partner. The imagination space presented as a live, navigable environment. Targeting 500+ public interactions.</li>
           <li><span class="accent-lime">Open-source practitioner toolkit</span> with documentation, tutorials, onboarding. Designed for independent artists without specialist technical support.</li>
-          <li><span class="accent-teal">Minimum 3 peer-reviewed publications:</span> position paper on cognitive sovereignty, technical systems paper on anti-gravity navigation, IDEA evaluation framework.</li>
+          <li><span class="accent-teal">Minimum 3 peer-reviewed publications:</span> position paper on cognitive sovereignty, technical systems paper on the anti-gravity tool prototype, IDEA evaluation framework.</li>
           <li><span class="accent-yellow">Structured knowledge-sharing</span> with the other funded sandpit projects.</li>
         </ul>
         <div class="stats-row" style="margin-top:0.2em">
           <div><div class="big-num accent-yellow">£250k</div><div class="big-num-label">18 months · 5 institutions · UK + Canada</div></div>
+        </div>
         </div>
       </section>
 
       <!-- ============================================ -->
       <!-- SLIDE 10: PROMPT 3 — HUMANITIES AS DESIGN LOGIC -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="arabesque" data-whitney-color="#33cabb">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">PROMPT 3 · THE HUMANITIES-DRIVEN TECHNICAL ADVANCE</div>
         <h2><span class="accent-teal">Philosophy and Critical Theory as generative design logic</span></h2>
         <div class="color-bar">
@@ -552,12 +615,15 @@
             <p style="font-size:0.5em; margin:0"><span class="accent-purple" style="font-weight:700">Post-capitalism, hauntology, and science fiction</span> provide the temporal and political imagination. Fisher's hauntology names the cultural condition we are building against: a present haunted by futures that never arrived, flattened by platform capitalism into eternal recombination of the already known. Speculative fiction has always been the laboratory for rehearsing alternative social orders. Our prototype operationalises this: latent space as a site for constructing futures that the dominant paradigm has foreclosed, not merely retrieving pasts it has already digested.</p>
           </div>
         </div>
+        </div>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 11: PROMPT 3 — TRANSDISCIPLINARY          -->
+      <!-- SLIDE 11: PROMPT 3 — TRANSDISCIPLINARY        -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="lissajous" data-whitney-color="#af52de" data-whitney-opacity="0.5">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">PROMPT 3 · We are the Chimeras: Authentic TRANSDISCIPLINARY ENRICHMENT </div>
         <h2><span class="accent-purple">Each discipline is changed</span></h2>
         <div class="color-bar">
@@ -575,12 +641,15 @@
         <div class="card highlight" style="margin-top:0.2em">
           <p style="margin:0; font-size:0.56em;"><span class="accent-yellow">This is the test:</span> Each discipline is substantively changed by its encounter with the other. That is the condition of <strong>genuine transdisciplinary research</strong>. Not interdisciplinary collaboration in name only. Neither a humanities nor a technical AI team could achieve this independently. We are the Chimeras and we are distinctly positioned to see what is not apparent.</p>
         </div>
+        </div>
       </section>
 
       <!-- ============================================ -->
-      <!-- SLIDE 12: TEAM + CLOSE                          -->
+      <!-- SLIDE 12: TEAM + CLOSE                        -->
       <!-- ============================================ -->
-      <section>
+      <section class="bg-sketch-slide" data-whitney="permutations" data-whitney-color="#fc0">
+        <div class="whitney-bg sketch-bg"></div>
+        <div class="slide-content">
         <div class="prompt-tag">THE TEAM</div>
         <h2><span class="accent-yellow">Who we are</span></h2>
         <div class="color-bar">
@@ -616,6 +685,7 @@
         </div>
         <p style="font-size:0.55em; margin-top:0.5em; font-family:'Space Mono',monospace;">Process over output. Sovereignty over delegation.<br>A direct technical alternative. Not merely a critique.</p>
         <p style="font-size:0.38em; opacity:0.35; margin-top:0.5em; font-style:italic;">"This work originated in Doing AI Differently and the Artificial Intelligence Humanities Sandpit, funded by AHRC-UKRI and SSHRC."</p>
+        </div>
       </section>
 
     </div>
@@ -699,6 +769,568 @@
     new p5(waveSketch);
   </script>
   <script>
+    // Gravity wells terrain sketch (instance mode)
+    const terrainSketch = function(p) {
+      let ZOOM = 2.2;
+      let Y_OFFSET = 0;
+      let GRIDDENSITY = 0.9;
+      let NOISE_SCALE = 0.2;
+      let NOISE_DETAIL = 0.5;
+      let HEIGHT_AMPLITUDE = 8;
+      let FLOW_SPEED = 0.05;
+      let DRIFT_SPEED = 0.02;
+      let NUM_WELLS = 5;
+      let WELL_SIZE_MIN = 0.08;
+      let WELL_SIZE_MAX = 0.15;
+      let WELL_DEPTH_MIN = 4;
+      let WELL_DEPTH_MAX = 8;
+      let WELL_SCROLL_SPEED = 0.05;
+      let WORM_TERRAIN_INFLUENCE = 0.1;
+      let WORM_RANDOMNESS = 0.25;
+      let WORM_INERTIA = 0.95;
+      let WORM_MAX_SPEED = 1.0;
+      let WORM_WELL_AVOIDANCE = 0.3;
+
+      let cols, rows, scl, terrain = [], flying = 0, xDrift = 0;
+      let wells = [], worm, wormTrail = [], maxTrail;
+      let isActive = false;
+
+      let palette = [
+        '#030303','#007aff','#33cabb','#a8e622','#fc0',
+        '#ff9505','#e91e63','#ff2d55','#af52de','#f7f2dd'
+      ];
+
+      function initScene() {
+        scl = p.min(p.width, p.height) * 0.025 * GRIDDENSITY;
+        cols = p.floor(p.width / scl);
+        rows = p.floor(p.height / scl);
+        terrain = [];
+        for (let x = 0; x < cols; x++) terrain[x] = new Array(rows).fill(0);
+        maxTrail = p.floor(cols * 0.6);
+        wells = [];
+        for (let i = 0; i < NUM_WELLS; i++) wells.push(makeWell());
+        worm = { pos: p.createVector(cols / 2, rows * 0.6), vel: p5.Vector.random2D() };
+        wormTrail = [];
+      }
+
+      function makeWell() {
+        return {
+          x: p.random(cols), y: p.random(rows),
+          r: p.random(cols * WELL_SIZE_MIN, cols * WELL_SIZE_MAX),
+          depth: p.random(scl * WELL_DEPTH_MIN, scl * WELL_DEPTH_MAX)
+        };
+      }
+
+      p.setup = function() {
+        let container = document.getElementById('terrain-container');
+        let cnv = p.createCanvas(container.offsetWidth, container.offsetHeight, p.WEBGL);
+        cnv.parent('terrain-container');
+        p.ortho();
+        initScene();
+      };
+
+      p.draw = function() {
+        if (!isActive) return;
+        p.background(10);
+        updateFlow();
+        generateTerrain();
+        updateWorm();
+        p.rotateX(p.atan(p.sqrt(1/2)));
+        p.rotateZ(p.PI / 4);
+        p.scale(ZOOM);
+        p.translate(-cols * scl / 2, -rows * scl / 2 + rows * scl * Y_OFFSET);
+        drawTerrain();
+        drawWorm();
+      };
+
+      function updateFlow() {
+        flying -= FLOW_SPEED;
+        xDrift += DRIFT_SPEED;
+        for (let w of wells) {
+          w.y += WELL_SCROLL_SPEED;
+          if (w.y > rows + w.r) { w.y = -w.r; w.x = p.random(cols); }
+        }
+      }
+
+      function generateTerrain() {
+        for (let y = 0; y < rows; y++) {
+          let yoff = (y + flying) * NOISE_SCALE;
+          for (let x = 0; x < cols; x++) {
+            let xoff = (x + xDrift) * NOISE_SCALE;
+            let n = p.noise(xoff * NOISE_DETAIL, yoff * NOISE_DETAIL);
+            let h = p.map(n, 0, 1, -scl * HEIGHT_AMPLITUDE, scl * HEIGHT_AMPLITUDE);
+            for (let w of wells) {
+              let d = p.dist(x, y, w.x, w.y);
+              if (d < w.r) {
+                let t = d / w.r;
+                let falloff = p.pow(p.cos(t * p.PI) * 0.5 + 0.5, 1.5);
+                h -= falloff * w.depth;
+              }
+            }
+            terrain[x][y] = h;
+          }
+        }
+      }
+
+      function getColor(h) {
+        let t = p.map(h, -scl * HEIGHT_AMPLITUDE, scl * HEIGHT_AMPLITUDE, 0, 1);
+        t = p.constrain(t, 0, 1);
+        let scaled = t * (palette.length - 1);
+        let i = p.floor(scaled);
+        let frac = scaled - i;
+        let c1 = p.color(palette[i]);
+        let c2 = p.color(palette[p.min(i + 1, palette.length - 1)]);
+        let c = p.lerpColor(c1, c2, frac);
+        return p.color(p.red(c), p.green(c), p.blue(c), 220);
+      }
+
+      function drawTerrain() {
+        p.noStroke();
+        for (let y = 0; y < rows - 1; y++) {
+          for (let x = 0; x < cols - 1; x++) {
+            let h1 = terrain[x][y], h2 = terrain[x+1][y];
+            let h3 = terrain[x][y+1], h4 = terrain[x+1][y+1];
+            let avg = (h1 + h2 + h3 + h4) * 0.25;
+            p.fill(getColor(avg));
+            p.beginShape(p.TRIANGLES);
+            p.vertex(x*scl, y*scl, h1);
+            p.vertex((x+1)*scl, y*scl, h2);
+            p.vertex(x*scl, (y+1)*scl, h3);
+            p.vertex((x+1)*scl, y*scl, h2);
+            p.vertex((x+1)*scl, (y+1)*scl, h4);
+            p.vertex(x*scl, (y+1)*scl, h3);
+            p.endShape();
+          }
+        }
+      }
+
+      function updateWorm() {
+        let force = p.createVector(0, 0);
+        let x = p.floor(worm.pos.x);
+        let y = p.floor(worm.pos.y);
+        if (x > 1 && x < cols - 2 && y > 1 && y < rows - 2) {
+          let h = terrain[x][y], hx = terrain[x+1][y], hy = terrain[x][y+1];
+          let grad = p.createVector(hx - h, hy - h);
+          grad.mult(WORM_TERRAIN_INFLUENCE);
+          force.add(grad);
+        }
+        for (let w of wells) {
+          let d = p.dist(worm.pos.x, worm.pos.y, w.x, w.y);
+          if (d < w.r) {
+            let dir = p5.Vector.sub(worm.pos, p.createVector(w.x, w.y));
+            dir.normalize();
+            dir.mult(WORM_WELL_AVOIDANCE);
+            force.add(dir);
+          }
+        }
+        worm.vel.mult(WORM_INERTIA);
+        force.add(p5.Vector.random2D().mult(WORM_RANDOMNESS));
+        worm.vel.add(force);
+        worm.vel.limit(WORM_MAX_SPEED);
+        worm.pos.add(worm.vel);
+        worm.pos.x = p.constrain(worm.pos.x, 1, cols - 2);
+        worm.pos.y = p.constrain(worm.pos.y, 1, rows - 2);
+        wormTrail.push(worm.pos.copy());
+        if (wormTrail.length > maxTrail) wormTrail.shift();
+      }
+
+      function drawWorm() {
+        p.stroke(255, 80, 80);
+        p.strokeWeight(scl * 0.25);
+        p.noFill();
+        p.beginShape();
+        for (let pt of wormTrail) {
+          let x = p.floor(pt.x), y = p.floor(pt.y);
+          let z = terrain[x][y] + scl * 0.6;
+          p.vertex(x * scl, y * scl, z);
+        }
+        p.endShape();
+      }
+
+      p.windowResized = function() {
+        let container = document.getElementById('terrain-container');
+        if (container) {
+          p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+          initScene();
+        }
+      };
+
+      // expose activation control — always resize on activation
+      p.setActive = function(a) {
+        isActive = a;
+        if (a) {
+          let container = document.getElementById('terrain-container');
+          if (container && container.offsetWidth > 0) {
+            p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+            initScene();
+          }
+        }
+      };
+    };
+
+    let terrainP5 = new p5(terrainSketch);
+  </script>
+
+  <script>
+    // ========================================================
+    // Whitney Harmonic Sketches — ambient backgrounds
+    // Inspired by John Whitney's Permutations (1968)
+    // Each pattern: harmonic motion, phase-shifted dots, slow rotation
+    // ========================================================
+
+    const whitneySketch = function(p) {
+      let w, h;
+      let t = 0;
+      let isActive = false;
+      let currentConfig = null;
+      let canvasEl = null;
+
+      p.setup = function() {
+        // Create canvas off-screen initially; we'll parent it on slide change
+        let cnv = p.createCanvas(1, 1);
+        canvasEl = cnv.elt;
+        canvasEl.style.display = 'none';
+        p.pixelDensity(1);
+      };
+
+      p.draw = function() {
+        if (!isActive || !currentConfig) { return; }
+        p.background(3); // --soft-black
+
+        let type = currentConfig.type;
+        let col = currentConfig.color;
+
+        if (type === 'permutations') drawPermutations(col);
+        else if (type === 'converge') drawConverge(col);
+        else if (type === 'matrix') drawMatrix(col);
+        else if (type === 'lissajous') drawLissajous(col);
+        else if (type === 'arabesque') drawArabesque(col);
+        else if (type === 'orbits') drawOrbits(col);
+
+        t += 1;
+      };
+
+      // ---------------------------------------------------
+      // PERMUTATIONS — Whitney's signature piece
+      // N dots on a circle, each rotating at i * speed
+      // Connected to harmonic partners
+      // ---------------------------------------------------
+      function drawPermutations(col) {
+        let cx = w * 0.5, cy = h * 0.5;
+        let radius = Math.min(w, h) * 0.38;
+        let n = 60;
+        let speed = 0.00015; // glacial spin
+        let pts = [];
+
+        for (let i = 0; i < n; i++) {
+          let angle = t * speed * (i + 1);
+          let x = cx + radius * Math.cos(angle);
+          let y = cy + radius * Math.sin(angle);
+          pts.push({ x, y });
+        }
+
+        // connecting lines (every 7th point — creates the Whitney string-art)
+        let c = p.color(col);
+        for (let i = 0; i < n; i++) {
+          let j = (i + 7) % n;
+          let k = (i + 13) % n;
+          let alpha = 130 + 60 * Math.sin(t * 0.001 + i * 0.3);
+          c.setAlpha(alpha);
+          p.stroke(c);
+          p.strokeWeight(1.3);
+          p.line(pts[i].x, pts[i].y, pts[j].x, pts[j].y);
+          c.setAlpha(alpha * 0.5);
+          p.strokeWeight(0.8);
+          p.line(pts[i].x, pts[i].y, pts[k].x, pts[k].y);
+        }
+
+        // dots
+        p.noStroke();
+        for (let i = 0; i < n; i++) {
+          let alpha = 200 + 55 * Math.sin(t * 0.002 + i * 0.5);
+          c.setAlpha(alpha);
+          p.fill(c);
+          let sz = 4 + 2 * Math.sin(t * 0.001 + i);
+          p.ellipse(pts[i].x, pts[i].y, sz, sz);
+        }
+      }
+
+      // ---------------------------------------------------
+      // CONVERGE — dots spiraling inward, the pull of attractors
+      // ---------------------------------------------------
+      function drawConverge(col) {
+        let cx = w * 0.5, cy = h * 0.5;
+        let maxR = Math.min(w, h) * 0.42;
+        let n = 48;
+        let rings = 4;
+        let speed = 0.00012; // glacial spin
+        let c = p.color(col);
+
+        for (let ring = 0; ring < rings; ring++) {
+          let radius = maxR * (0.25 + ring * 0.22);
+          let ringOffset = ring * 0.618; // golden angle offset
+          let pts = [];
+
+          for (let i = 0; i < n; i++) {
+            let angle = t * speed * (i + 1 + ring * 3) + ringOffset;
+            let wobble = Math.sin(t * 0.001 + i * 0.4 + ring) * radius * 0.08;
+            let r = radius + wobble;
+            let x = cx + r * Math.cos(angle);
+            let y = cy + r * Math.sin(angle);
+            pts.push({ x, y });
+          }
+
+          // lines between rings
+          if (ring > 0) {
+            let prevRadius = maxR * (0.25 + (ring - 1) * 0.22);
+            let prevOffset = (ring - 1) * 0.618;
+            for (let i = 0; i < n; i += 2) {
+              let prevAngle = t * speed * (i + 1 + (ring - 1) * 3) + prevOffset;
+              let px = cx + prevRadius * Math.cos(prevAngle);
+              let py = cy + prevRadius * Math.sin(prevAngle);
+              c.setAlpha(70);
+              p.stroke(c);
+              p.strokeWeight(0.8);
+              p.line(pts[i].x, pts[i].y, px, py);
+            }
+          }
+
+          // dots
+          p.noStroke();
+          for (let i = 0; i < n; i++) {
+            let alpha = 120 + 80 * Math.sin(t * 0.002 + i * 0.6);
+            c.setAlpha(alpha);
+            p.fill(c);
+            p.ellipse(pts[i].x, pts[i].y, 4, 4);
+          }
+        }
+      }
+
+      // ---------------------------------------------------
+      // MATRIX — grid of dots with sinusoidal displacement
+      // Whitney's harmonic grid studies
+      // ---------------------------------------------------
+      function drawMatrix(col) {
+        let cols = 24;
+        let rows = 16;
+        let spacingX = w / (cols + 1);
+        let spacingY = h / (rows + 1);
+        let speed = 0.0005; // slow drift
+        let c = p.color(col);
+
+        p.noStroke();
+        for (let gy = 0; gy < rows; gy++) {
+          for (let gx = 0; gx < cols; gx++) {
+            let baseX = (gx + 1) * spacingX;
+            let baseY = (gy + 1) * spacingY;
+
+            // harmonic displacement — each row/col at different phase
+            let dx = Math.sin(t * speed * (gx + 1) + gy * 0.3) * spacingX * 0.4;
+            let dy = Math.cos(t * speed * (gy + 1) + gx * 0.2) * spacingY * 0.4;
+
+            let x = baseX + dx;
+            let y = baseY + dy;
+
+            let alpha = 110 + 80 * Math.sin(t * 0.002 + gx * 0.4 + gy * 0.3);
+            c.setAlpha(alpha);
+            p.fill(c);
+            let sz = 3.5 + Math.sin(t * 0.001 + gx + gy) * 1.5;
+            p.ellipse(x, y, sz, sz);
+
+            // connections to neighbors
+            if (gx < cols - 1) {
+              let nx = (gx + 2) * spacingX + Math.sin(t * speed * (gx + 2) + gy * 0.3) * spacingX * 0.4;
+              let ny = baseY + Math.cos(t * speed * (gy + 1) + (gx + 1) * 0.2) * spacingY * 0.4;
+              c.setAlpha(50);
+              p.stroke(c);
+              p.strokeWeight(0.6);
+              p.line(x, y, nx, ny);
+              p.noStroke();
+            }
+          }
+        }
+      }
+
+      // ---------------------------------------------------
+      // LISSAJOUS — parametric curves with evolving ratios
+      // Whitney's exploration of frequency relationships
+      // ---------------------------------------------------
+      function drawLissajous(col) {
+        let cx = w * 0.5, cy = h * 0.5;
+        let rx = w * 0.48, ry = h * 0.47;
+        let c = p.color(col);
+        let curves = 3;
+
+        for (let curve = 0; curve < curves; curve++) {
+          // slowly drifting frequency ratios — the Whitney signature
+          let freqA = 2 + curve + Math.sin(t * 0.0001 + curve) * 0.5;
+          let freqB = 3 + curve * 0.7 + Math.cos(t * 0.00015 + curve) * 0.3;
+          let phaseShift = t * 0.0003 + curve * 1.2; // very slow phase drift
+
+          p.noFill();
+          let alpha = 140 + curve * 25;
+          c.setAlpha(alpha);
+          p.stroke(c);
+          p.strokeWeight(1.6 - curve * 0.2);
+
+          p.beginShape();
+          let steps = 800;
+          for (let i = 0; i <= steps; i++) {
+            let angle = (i / steps) * Math.PI * 2 * 4;
+            let x = cx + rx * Math.sin(freqA * angle + phaseShift);
+            let y = cy + ry * Math.sin(freqB * angle);
+            p.vertex(x, y);
+          }
+          p.endShape();
+
+          // accent dots at harmonic nodes
+          p.noStroke();
+          let dotAlpha = 200 + curve * 30;
+          c.setAlpha(Math.min(dotAlpha, 255));
+          p.fill(c);
+          for (let i = 0; i < 20; i++) {
+            let angle = (i / 20) * Math.PI * 2 * 4;
+            let x = cx + rx * Math.sin(freqA * angle + phaseShift);
+            let y = cy + ry * Math.sin(freqB * angle);
+            p.ellipse(x, y, 5, 5);
+          }
+        }
+      }
+
+      // ---------------------------------------------------
+      // ARABESQUE — points on concentric circles connected
+      // String-art harmonics, Whitney's line studies
+      // ---------------------------------------------------
+      function drawArabesque(col) {
+        let cx = w * 0.5, cy = h * 0.5;
+        let r1 = Math.min(w, h) * 0.2;
+        let r2 = Math.min(w, h) * 0.38;
+        let n = 36;
+        let speed1 = 0.0005; // slow spin
+        let speed2 = 0.0003;
+        let c = p.color(col);
+
+        let inner = [], outer = [];
+
+        for (let i = 0; i < n; i++) {
+          let a1 = t * speed1 * (i + 1);
+          inner.push({ x: cx + r1 * Math.cos(a1), y: cy + r1 * Math.sin(a1) });
+          let a2 = t * speed2 * (i + 1) + Math.PI * 0.5;
+          outer.push({ x: cx + r2 * Math.cos(a2), y: cy + r2 * Math.sin(a2) });
+        }
+
+        // connect inner to outer — the string-art effect
+        for (let i = 0; i < n; i++) {
+          let j = (i + Math.floor(n * 0.382)) % n; // golden ratio skip
+          let alpha = 80 + 40 * Math.sin(t * 0.002 + i * 0.4);
+          c.setAlpha(alpha);
+          p.stroke(c);
+          p.strokeWeight(1.0);
+          p.line(inner[i].x, inner[i].y, outer[j].x, outer[j].y);
+        }
+
+        // dots on both rings
+        p.noStroke();
+        for (let i = 0; i < n; i++) {
+          let alpha = 160 + 60 * Math.sin(t * 0.003 + i);
+          c.setAlpha(alpha);
+          p.fill(c);
+          p.ellipse(inner[i].x, inner[i].y, 4.5, 4.5);
+          c.setAlpha(alpha * 0.75);
+          p.fill(c);
+          p.ellipse(outer[i].x, outer[i].y, 3.5, 3.5);
+        }
+      }
+
+      // ---------------------------------------------------
+      // ORBITS — concentric orbital paths, gravitational pull
+      // ---------------------------------------------------
+      function drawOrbits(col) {
+        let cx = w * 0.5, cy = h * 0.5;
+        let maxR = Math.min(w, h) * 0.4;
+        let orbits = 5;
+        let dotsPerOrbit = 24;
+        let speed = 0.0004; // slow orbital drift
+        let c = p.color(col);
+
+        for (let o = 0; o < orbits; o++) {
+          let radius = maxR * (0.15 + o * 0.18);
+          let orbitSpeed = speed / (o * 0.4 + 1); // inner orbits faster
+
+          // orbit path
+          c.setAlpha(30);
+          p.stroke(c);
+          p.strokeWeight(0.6);
+          p.noFill();
+          p.ellipse(cx, cy, radius * 2, radius * 2);
+
+          // dots along orbit
+          p.noStroke();
+          for (let i = 0; i < dotsPerOrbit; i++) {
+            let angle = t * orbitSpeed * (i + 1) + o * 1.5;
+            // slight eccentricity
+            let rx = radius * (1 + 0.1 * Math.sin(t * 0.0005 + o));
+            let ry = radius * (1 - 0.1 * Math.sin(t * 0.0005 + o));
+            let x = cx + rx * Math.cos(angle);
+            let y = cy + ry * Math.sin(angle);
+
+            let alpha = 120 + 80 * Math.sin(t * 0.002 + i * 0.5 + o);
+            c.setAlpha(alpha);
+            p.fill(c);
+            let sz = 3 + Math.sin(t * 0.001 + i + o) * 1.5;
+            p.ellipse(x, y, sz, sz);
+
+            // connect dots to center — gravitational pull lines
+            if (i % 4 === 0) {
+              c.setAlpha(35);
+              p.stroke(c);
+              p.strokeWeight(0.4);
+              p.line(x, y, cx, cy);
+              p.noStroke();
+            }
+          }
+        }
+      }
+
+      // ---------------------------------------------------
+      // ACTIVATION + CANVAS MANAGEMENT
+      // ---------------------------------------------------
+      p.activate = function(container, config) {
+        if (!container) {
+          isActive = false;
+          canvasEl.style.display = 'none';
+          return;
+        }
+        // move canvas into the target container
+        container.innerHTML = '';
+        container.appendChild(canvasEl);
+        canvasEl.style.display = 'block';
+
+        w = container.offsetWidth;
+        h = container.offsetHeight;
+        p.resizeCanvas(w, h);
+
+        currentConfig = config;
+        isActive = true;
+      };
+
+      p.deactivate = function() {
+        isActive = false;
+      };
+
+      p.windowResized = function() {
+        if (isActive && canvasEl.parentElement) {
+          w = canvasEl.parentElement.offsetWidth;
+          h = canvasEl.parentElement.offsetHeight;
+          p.resizeCanvas(w, h);
+        }
+      };
+    };
+
+    let whitneyP5 = new p5(whitneySketch);
+  </script>
+
+  <script>
     Reveal.initialize({
       hash: true,
       slideNumber: true,
@@ -713,6 +1345,36 @@
       transitionSpeed: 'fast',
       backgroundTransition: 'none',
       disableLayout: true
+    });
+
+    // Unified slide-change handler for all sketch types
+    function activateSlide(slide) {
+      // Terrain sketch activation
+      let isTerrain = slide.querySelector('#terrain-container');
+      terrainP5.setActive(!!isTerrain);
+
+      // Whitney sketch activation
+      let whitneyContainer = slide.querySelector('.whitney-bg');
+      if (whitneyContainer && slide.dataset.whitney) {
+        let opacity = parseFloat(slide.dataset.whitneyOpacity) || 1.0;
+        whitneyContainer.style.opacity = opacity;
+        whitneyP5.activate(whitneyContainer, {
+          type: slide.dataset.whitney,
+          color: slide.dataset.whitneyColor || '#f7f2dd'
+        });
+      } else {
+        whitneyP5.deactivate();
+      }
+    }
+
+    Reveal.on('slidechanged', function(event) {
+      // Small delay lets fade transition complete so containers have real dimensions
+      setTimeout(function() { activateSlide(event.currentSlide); }, 80);
+    });
+
+    // Also fire on ready so the first slide's sketch activates
+    Reveal.on('ready', function(event) {
+      setTimeout(function() { activateSlide(event.currentSlide); }, 80);
     });
   </script>
 </body>
