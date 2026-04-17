@@ -200,11 +200,11 @@
 
     /* Sketch-backed slides: cards get dark bg and no border */
     .bg-sketch-slide .card {
-      background-color: rgba(3, 3, 3, 0.85);
+      background-color: rgba(3, 3, 3, 0.80);
       border: none;
     }
     .bg-sketch-slide .team-member {
-      background-color: rgba(3, 3, 3, 0.85);
+      background-color: rgba(3, 3, 3, 0.80);
       border: none;
     }
 
@@ -354,7 +354,7 @@
       <!-- ============================================ -->
       <!-- SLIDE 2: SO WHAT — THE CONCRETE STAKES        -->
       <!-- ============================================ -->
-      <section class="bg-sketch-slide" data-whitney="matrix" data-whitney-color="#ff2d55">
+      <section class="bg-sketch-slide" data-whitney="branches" data-whitney-color="#ff2d55">
         <div class="whitney-bg sketch-bg"></div>
         <div class="slide-content">
         <div class="prompt-tag">PROMPT 1 · SO WHAT</div>
@@ -442,7 +442,7 @@
       <!-- ============================================ -->
       <!-- SLIDE 5: WHY THIS WORKS — MET + EPISTEMIC    -->
       <!-- ============================================ -->
-      <section class="bg-sketch-slide" data-whitney="arabesque" data-whitney-color="#fc0">
+      <section class="bg-sketch-slide" data-whitney="constellation" data-whitney-color="#fc0">
         <div class="whitney-bg sketch-bg"></div>
         <div class="slide-content">
         <div class="prompt-tag">PROMPT 2 · THE THEORETICAL GROUND</div>
@@ -470,7 +470,7 @@
       <section class="bg-sketch-slide">
         <div id="terrain-container" class="sketch-bg"></div>
         <div class="slide-content">
-        <div style="background:rgba(3,3,3,0.85); padding:0.5em 0.7em; margin:0.4em 0;">
+        <div style="background:rgba(3,3,3,0.80); padding:0.5em 0.7em; margin:0.4em 0;">
           <div class="prompt-tag">PROMPT 2 · DELIVERABLE: WP2.1</div>
           <h2><span class="accent-lime">The Anti-Gravity Tool Prototype</span></h2>
           <div class="color-bar">
@@ -507,7 +507,7 @@
       <section class="bg-sketch-slide" data-whitney="permutations" data-whitney-color="#af52de">
         <div class="whitney-bg sketch-bg"></div>
         <div class="slide-content">
-        <div style="background:rgba(3,3,3,0.85); padding:0.5em 0.7em; margin:0.4em 0;">
+        <div style="background:rgba(3,3,3,0.80); padding:0.5em 0.7em; margin:0.4em 0;">
           <div class="prompt-tag">PROMPT 2 · DELIVERABLE: WP2.2</div>
           <h2><span class="accent-purple">The Latent Storytelling Framework</span></h2>
           <div class="color-bar">
@@ -622,7 +622,7 @@
       <!-- ============================================ -->
       <!-- SLIDE 11: PROMPT 3 — TRANSDISCIPLINARY        -->
       <!-- ============================================ -->
-      <section class="bg-sketch-slide" data-whitney="lissajous" data-whitney-color="#af52de" data-whitney-opacity="0.5">
+      <section class="bg-sketch-slide" data-whitney="gravity-bodies" data-whitney-color="#af52de" data-whitney-opacity="0.5">
         <div class="whitney-bg sketch-bg"></div>
         <div class="slide-content">
         <div class="prompt-tag">PROMPT 3 · We are the Chimeras: Authentic TRANSDISCIPLINARY ENRICHMENT </div>
@@ -648,7 +648,7 @@
       <!-- ============================================ -->
       <!-- SLIDE 12: TEAM + CLOSE                        -->
       <!-- ============================================ -->
-      <section class="bg-sketch-slide" data-whitney="permutations" data-whitney-color="#fc0">
+      <section class="bg-sketch-slide" data-whitney="weather" data-whitney-color="#fc0">
         <div class="whitney-bg sketch-bg"></div>
         <div class="slide-content">
         <div class="prompt-tag">THE TEAM</div>
@@ -1022,6 +1022,10 @@
         else if (type === 'lissajous') drawLissajous(col);
         else if (type === 'arabesque') drawArabesque(col);
         else if (type === 'orbits') drawOrbits(col);
+        else if (type === 'branches') drawBranches(col);
+        else if (type === 'constellation') drawConstellation(col);
+        else if (type === 'weather') drawWeather(col);
+        else if (type === 'gravity-bodies') drawGravityBodies(col);
 
         t += 1;
       };
@@ -1309,6 +1313,473 @@
       }
 
       // ---------------------------------------------------
+      // BRANCHES — recursive harmonic forest
+      // Each branch sways with phase-shifted sine, forks at golden angles
+      // ---------------------------------------------------
+      function drawBranches(col) {
+        let c = p.color(col);
+        let trunks = 9;
+        let spacing = w / (trunks + 1);
+
+        for (let tr = 0; tr < trunks; tr++) {
+          // spread trunks across full width
+          let x = spacing * (tr + 1) + Math.sin(t * 0.0006 + tr * 1.8) * spacing * 0.2;
+          let y = h + 10;
+          // grow upward with gentle sway
+          let angle = -Math.PI / 2 + Math.sin(t * 0.0004 + tr * 2.1) * 0.15;
+          // taller trunks — grow ~60% of slide height
+          let len = h * 0.32 + Math.sin(tr * 1.3) * h * 0.05;
+          drawBranch(c, x, y, angle, len, 0, 7, tr);
+        }
+      }
+
+      function drawBranch(c, x, y, angle, len, depth, maxDepth, seed) {
+        if (depth >= maxDepth || len < 2) return;
+
+        // sway: each branch breathes slowly, deeper = more movement
+        let sway = Math.sin(t * 0.0003 * (depth + 1) + seed * 1.7 + depth * 0.9) * 0.15 * (depth + 1);
+        // add a secondary slower harmonic for organic feel
+        sway += Math.sin(t * 0.00012 + seed * 3.1 + depth * 1.4) * 0.06 * depth;
+        let a = angle + sway;
+
+        let x2 = x + Math.cos(a) * len;
+        let y2 = y + Math.sin(a) * len;
+
+        // line — thicker, more visible
+        let lineAlpha = 180 - depth * 16;
+        let weight = 2.2 - depth * 0.25;
+        c.setAlpha(Math.max(lineAlpha, 40));
+        p.stroke(c);
+        p.strokeWeight(Math.max(weight, 0.4));
+        p.line(x, y, x2, y2);
+
+        // dot at junction — pulsing size
+        p.noStroke();
+        let dotAlpha = 220 - depth * 18;
+        c.setAlpha(Math.max(dotAlpha, 60));
+        p.fill(c);
+        let pulse = Math.sin(t * 0.002 + seed * 2 + depth * 0.7) * 0.5;
+        let dotSz = 5 - depth * 0.5 + pulse;
+        p.ellipse(x2, y2, Math.max(dotSz, 1.5), Math.max(dotSz, 1.5));
+
+        // fork: two branches at golden-ish angles
+        let shrink = 0.66 + Math.sin(t * 0.0002 + seed + depth) * 0.05;
+        let spread = 0.4 + depth * 0.06;
+
+        drawBranch(c, x2, y2, a - spread, len * shrink, depth + 1, maxDepth, seed + 0.3);
+        drawBranch(c, x2, y2, a + spread, len * shrink, depth + 1, maxDepth, seed + 0.7);
+
+        // occasional third branch for density
+        if (depth > 0 && depth < 5 && ((seed * 7 + depth) % 3 < 1)) {
+          let midSpread = Math.sin(t * 0.00025 + seed * 3 + depth) * 0.35;
+          drawBranch(c, x2, y2, a + midSpread, len * shrink * 0.7, depth + 2, maxDepth, seed + 1.1);
+        }
+      }
+
+      // ---------------------------------------------------
+      // GRAVITY-BODIES — n-body gravitational system
+      // Particles attract/repel each other, deflecting trajectories
+      // Trails show how encounters change each body's path
+      // ---------------------------------------------------
+      let gBodies = [];
+      let gTrailPts = [];
+      const G_BODY_COUNT = 28;
+      const G_TRAIL_MAX = 6000;
+      const G_CONSTANT = 120;
+
+      function initGravityBodies() {
+        gBodies = [];
+        gTrailPts = [];
+        for (let i = 0; i < G_BODY_COUNT; i++) {
+          let angle = Math.random() * Math.PI * 2;
+          let speed = 0.4 + Math.random() * 1.0;
+          // mix of small fast particles and big slow attractors
+          let isBig = Math.random() < 0.2;
+          let mass = isBig ? (6 + Math.random() * 6) : (1 + Math.random() * 3);
+          gBodies.push({
+            x: w * 0.08 + Math.random() * w * 0.84,
+            y: h * 0.08 + Math.random() * h * 0.84,
+            vx: Math.cos(angle) * speed * (isBig ? 0.4 : 1),
+            vy: Math.sin(angle) * speed * (isBig ? 0.4 : 1),
+            mass: mass,
+            id: i
+          });
+        }
+      }
+
+      function drawGravityBodies(col) {
+        if (gBodies.length === 0) initGravityBodies();
+
+        let c = p.color(col);
+
+        // compute gravitational forces between all pairs
+        for (let i = 0; i < gBodies.length; i++) {
+          let ax = 0, ay = 0;
+          let bi = gBodies[i];
+          for (let j = 0; j < gBodies.length; j++) {
+            if (i === j) continue;
+            let bj = gBodies[j];
+            let dx = bj.x - bi.x;
+            let dy = bj.y - bi.y;
+            let distSq = dx * dx + dy * dy;
+            let minDist = (bi.mass + bj.mass) * 8;
+            distSq = Math.max(distSq, minDist * minDist); // soft minimum
+            let dist = Math.sqrt(distSq);
+            let force = G_CONSTANT * bj.mass / distSq;
+            ax += (dx / dist) * force;
+            ay += (dy / dist) * force;
+          }
+          bi.vx += ax * 0.016;
+          bi.vy += ay * 0.016;
+
+          // gentle damping
+          bi.vx *= 0.999;
+          bi.vy *= 0.999;
+
+          // speed limit
+          let spd = Math.sqrt(bi.vx * bi.vx + bi.vy * bi.vy);
+          if (spd > 3.5) {
+            bi.vx = (bi.vx / spd) * 3.5;
+            bi.vy = (bi.vy / spd) * 3.5;
+          }
+        }
+
+        // update positions and record trails
+        for (let i = 0; i < gBodies.length; i++) {
+          let bi = gBodies[i];
+          bi.x += bi.vx;
+          bi.y += bi.vy;
+
+          // soft boundary — steer back when near edges
+          let margin = 60;
+          if (bi.x < margin) bi.vx += 0.05;
+          if (bi.x > w - margin) bi.vx -= 0.05;
+          if (bi.y < margin) bi.vy += 0.05;
+          if (bi.y > h - margin) bi.vy -= 0.05;
+
+          gTrailPts.push({
+            x: bi.x, y: bi.y,
+            id: bi.id, mass: bi.mass,
+            birth: t
+          });
+        }
+
+        // trim trails
+        while (gTrailPts.length > G_TRAIL_MAX) gTrailPts.shift();
+
+        // draw trails — grouped by body for continuous lines
+        for (let id = 0; id < G_BODY_COUNT; id++) {
+          p.noFill();
+          p.beginShape();
+          let count = 0;
+          for (let k = 0; k < gTrailPts.length; k++) {
+            let pt = gTrailPts[k];
+            if (pt.id !== id) continue;
+            let age = t - pt.birth;
+            let fade = Math.max(0, 1 - age / 600);
+            if (fade <= 0) continue;
+            c.setAlpha(fade * 160);
+            p.stroke(c);
+            p.strokeWeight(0.6 + pt.mass * 0.25);
+            p.curveVertex(pt.x, pt.y);
+            count++;
+          }
+          p.endShape();
+        }
+
+        // draw gravitational influence lines between close bodies
+        for (let i = 0; i < gBodies.length; i++) {
+          for (let j = i + 1; j < gBodies.length; j++) {
+            let bi = gBodies[i], bj = gBodies[j];
+            let dx = bj.x - bi.x;
+            let dy = bj.y - bi.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            let maxDist = 300;
+            if (dist < maxDist) {
+              let strength = 1 - dist / maxDist;
+              c.setAlpha(strength * strength * 120);
+              p.stroke(c);
+              p.strokeWeight(0.4 + strength);
+              p.line(bi.x, bi.y, bj.x, bj.y);
+            }
+          }
+        }
+
+        // draw bodies — size by mass, pulsing glow
+        for (let i = 0; i < gBodies.length; i++) {
+          let bi = gBodies[i];
+          let pulse = 1 + Math.sin(t * 0.003 + bi.id * 1.5) * 0.2;
+
+          // outer glow
+          c.setAlpha(50);
+          p.noStroke();
+          p.fill(c);
+          let glowSz = (bi.mass * 5 + 14) * pulse;
+          p.ellipse(bi.x, bi.y, glowSz, glowSz);
+
+          // core
+          c.setAlpha(230);
+          p.fill(c);
+          let coreSz = (bi.mass * 2.2 + 4) * pulse;
+          p.ellipse(bi.x, bi.y, coreSz, coreSz);
+        }
+      }
+
+      // ---------------------------------------------------
+      // WEATHER — Perlin noise flow field with drifting particles
+      // like atmospheric pressure systems, wind lines, weather maps
+      // ---------------------------------------------------
+      let weatherParticles = [];
+      const WEATHER_COUNT = 300;
+      let noiseField = null;
+      const NOISE_SCALE = 0.003;
+      const NOISE_Z_SPEED = 0.0003;
+      let noiseZ = 0;
+
+      function initWeather() {
+        weatherParticles = [];
+        for (let i = 0; i < WEATHER_COUNT; i++) {
+          weatherParticles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            px: 0, py: 0,       // previous position for trails
+            age: Math.floor(Math.random() * 300),
+            maxAge: 200 + Math.floor(Math.random() * 250),
+            speed: 0.4 + Math.random() * 0.8
+          });
+        }
+      }
+
+      // simple Perlin-like noise using sine harmonics
+      function flowNoise(x, y, z) {
+        // layer multiple sine waves at different frequencies for organic feel
+        let v = 0;
+        v += Math.sin(x * 0.012 + z * 1.1) * Math.cos(y * 0.009 + z * 0.8);
+        v += Math.sin(x * 0.007 - y * 0.011 + z * 1.7) * 0.5;
+        v += Math.cos(x * 0.019 + y * 0.014 - z * 0.6) * 0.3;
+        v += Math.sin(x * 0.003 + y * 0.005 + z * 2.1) * 0.7;
+        return v;
+      }
+
+      function drawWeather(col) {
+        if (weatherParticles.length === 0) initWeather();
+
+        let c = p.color(col);
+        noiseZ += NOISE_Z_SPEED;
+
+        for (let i = 0; i < weatherParticles.length; i++) {
+          let pt = weatherParticles[i];
+
+          // store previous position
+          pt.px = pt.x;
+          pt.py = pt.y;
+
+          // flow angle from noise field
+          let angle = flowNoise(pt.x * NOISE_SCALE, pt.y * NOISE_SCALE, noiseZ) * Math.PI * 2;
+
+          // add a slow large-scale drift (like a weather front moving)
+          angle += Math.sin(pt.y * 0.001 + noiseZ * 0.5) * 0.4;
+
+          pt.x += Math.cos(angle) * pt.speed;
+          pt.y += Math.sin(angle) * pt.speed;
+          pt.age++;
+
+          // fade based on age
+          let lifeFrac = pt.age / pt.maxAge;
+          let fade = lifeFrac < 0.1 ? lifeFrac / 0.1 :
+                     lifeFrac > 0.8 ? (1 - lifeFrac) / 0.2 : 1.0;
+          fade = Math.max(fade, 0);
+
+          // draw trail line
+          let alpha = fade * 140;
+          c.setAlpha(alpha);
+          p.stroke(c);
+          p.strokeWeight(1.2);
+          // only draw if previous pos is close (no wrap-around artifacts)
+          let dx = pt.x - pt.px;
+          let dy = pt.y - pt.py;
+          if (dx * dx + dy * dy < 100) {
+            p.line(pt.px, pt.py, pt.x, pt.y);
+          }
+
+          // dot at head
+          p.noStroke();
+          c.setAlpha(alpha * 1.3);
+          p.fill(c);
+          let dotSz = 2.0 + fade * 1.5;
+          p.ellipse(pt.x, pt.y, dotSz, dotSz);
+
+          // respawn if off-screen or too old
+          if (pt.age > pt.maxAge || pt.x < -20 || pt.x > w + 20 || pt.y < -20 || pt.y > h + 20) {
+            pt.x = Math.random() * w;
+            pt.y = Math.random() * h;
+            pt.px = pt.x;
+            pt.py = pt.y;
+            pt.age = 0;
+            pt.maxAge = 200 + Math.floor(Math.random() * 250);
+            pt.speed = 0.4 + Math.random() * 0.8;
+          }
+        }
+
+        // isobars — faint contour rings from the same noise field
+        c.setAlpha(30);
+        p.noFill();
+        p.stroke(c);
+        p.strokeWeight(0.6);
+        let step = 28;
+        for (let gx = 0; gx < w; gx += step) {
+          for (let gy = 0; gy < h; gy += step) {
+            let v = flowNoise(gx * NOISE_SCALE, gy * NOISE_SCALE, noiseZ);
+            // draw tiny marks where noise crosses thresholds (like isobars)
+            let frac = v - Math.floor(v);
+            if (Math.abs(frac) < 0.08 || Math.abs(frac - 0.5) < 0.06) {
+              let sz = 3 + Math.abs(v) * 2;
+              p.ellipse(gx, gy, sz, sz);
+            }
+          }
+        }
+      }
+
+      // ---------------------------------------------------
+      // CONSTELLATION SPHERE — particles orbiting a sphere,
+      // leaving fading trails, connecting when near
+      // ---------------------------------------------------
+      let cParticles = [];
+      let cTrails = [];
+      const NUM_PARTICLES = 60;
+      const TRAIL_MAX = 1200;
+      const CONNECT_DIST = 0.55; // in radians on sphere surface
+
+      function initConstellationParticles() {
+        cParticles = [];
+        cTrails = [];
+        for (let i = 0; i < NUM_PARTICLES; i++) {
+          cParticles.push({
+            lat: (Math.random() - 0.5) * Math.PI * 0.9,       // latitude
+            lon: Math.random() * Math.PI * 2,                   // longitude
+            latSpd: (Math.random() - 0.5) * 0.00008,            // drift speed
+            lonSpd: 0.00015 + Math.random() * 0.00025,          // orbit speed
+            phase: Math.random() * Math.PI * 2
+          });
+        }
+      }
+
+      function sphereToScreen(lat, lon, radius, cx, cy, rotY) {
+        // 3D sphere coords
+        let x3 = radius * Math.cos(lat) * Math.sin(lon + rotY);
+        let y3 = radius * Math.sin(lat);
+        let z3 = radius * Math.cos(lat) * Math.cos(lon + rotY);
+        // simple perspective
+        let perspective = 1.0 + z3 / (radius * 3);
+        return {
+          x: cx + x3 * perspective,
+          y: cy - y3 * perspective,
+          z: z3,
+          depth: perspective
+        };
+      }
+
+      function drawConstellation(col) {
+        if (cParticles.length === 0) initConstellationParticles();
+
+        let c = p.color(col);
+        let cx = w / 2;
+        let cy = h / 2;
+        let radius = Math.min(w, h) * 0.44;
+        let rotY = t * 0.00012; // slow global rotation
+
+        // update particles
+        let screenPos = [];
+        for (let i = 0; i < cParticles.length; i++) {
+          let pt = cParticles[i];
+          pt.lat += pt.latSpd + Math.sin(t * 0.00005 + pt.phase) * 0.00003;
+          pt.lon += pt.lonSpd;
+
+          // soft latitude bounds — bounce gently
+          if (pt.lat > Math.PI * 0.44) pt.latSpd = -Math.abs(pt.latSpd);
+          if (pt.lat < -Math.PI * 0.44) pt.latSpd = Math.abs(pt.latSpd);
+
+          let sp = sphereToScreen(pt.lat, pt.lon, radius, cx, cy, rotY);
+          screenPos.push(sp);
+
+          // add trail point
+          cTrails.push({
+            x: sp.x, y: sp.y, z: sp.z,
+            birth: t, depth: sp.depth,
+            lat: pt.lat, lon: pt.lon
+          });
+        }
+
+        // trim trails
+        while (cTrails.length > TRAIL_MAX) cTrails.shift();
+
+        // draw fading trails as dots
+        for (let i = 0; i < cTrails.length; i++) {
+          let tr = cTrails[i];
+          let age = (t - tr.birth);
+          let fade = Math.max(0, 1 - age / 400);
+          if (fade <= 0) continue;
+          let alpha = fade * 160 * tr.depth;
+          c.setAlpha(Math.min(alpha, 200));
+          p.noStroke();
+          p.fill(c);
+          let sz = 2.5 * tr.depth * fade;
+          p.ellipse(tr.x, tr.y, sz, sz);
+        }
+
+        // draw connections between nearby particles
+        for (let i = 0; i < screenPos.length; i++) {
+          for (let j = i + 1; j < screenPos.length; j++) {
+            let pi = cParticles[i], pj = cParticles[j];
+            // angular distance on sphere
+            let dLat = pi.lat - pj.lat;
+            let dLon = pi.lon - pj.lon;
+            let angDist = Math.sqrt(dLat * dLat + dLon * dLon);
+
+            if (angDist < CONNECT_DIST) {
+              let strength = 1 - angDist / CONNECT_DIST;
+              let avgDepth = (screenPos[i].depth + screenPos[j].depth) / 2;
+              c.setAlpha(strength * 150 * avgDepth);
+              p.stroke(c);
+              p.strokeWeight(1.0 * avgDepth);
+              p.line(screenPos[i].x, screenPos[i].y, screenPos[j].x, screenPos[j].y);
+            }
+          }
+        }
+
+        // draw particles as bright dots
+        for (let i = 0; i < screenPos.length; i++) {
+          let sp = screenPos[i];
+          let pulse = 1 + Math.sin(t * 0.001 + cParticles[i].phase) * 0.3;
+          c.setAlpha(240 * sp.depth);
+          p.noStroke();
+          p.fill(c);
+          let sz = (5.5 + pulse) * sp.depth;
+          p.ellipse(sp.x, sp.y, sz, sz);
+        }
+
+        // faint sphere outline — equator and meridian
+        c.setAlpha(45);
+        p.noFill();
+        p.stroke(c);
+        p.strokeWeight(0.8);
+        // equator
+        p.beginShape();
+        for (let a = 0; a <= Math.PI * 2; a += 0.05) {
+          let sp = sphereToScreen(0, a, radius, cx, cy, rotY);
+          p.vertex(sp.x, sp.y);
+        }
+        p.endShape();
+        // meridian
+        p.beginShape();
+        for (let a = -Math.PI / 2; a <= Math.PI / 2; a += 0.05) {
+          let sp = sphereToScreen(a, 0, radius, cx, cy, rotY);
+          p.vertex(sp.x, sp.y);
+        }
+        p.endShape();
+      }
+
+      // ---------------------------------------------------
       // ACTIVATION + CANVAS MANAGEMENT
       // ---------------------------------------------------
       p.activate = function(container, config) {
@@ -1328,6 +1799,20 @@
 
         currentConfig = config;
         isActive = true;
+
+        // reset state-dependent patterns when switching
+        if (config.type === 'constellation') {
+          cParticles = [];
+          cTrails = [];
+        }
+        if (config.type === 'weather') {
+          weatherParticles = [];
+          noiseZ = 0;
+        }
+        if (config.type === 'gravity-bodies') {
+          gBodies = [];
+          gTrailPts = [];
+        }
       };
 
       p.deactivate = function() {
