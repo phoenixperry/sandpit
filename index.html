@@ -98,6 +98,7 @@
       opacity: 0.5;
       margin-bottom: 0.3em;
       letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
 
     .team-grid {
@@ -227,7 +228,14 @@
       font-weight: 700;
       margin-bottom: 0.2em;
     }
-
+    .citation{
+      font-family: 'Space Mono', monospace; 
+      font-size: 0.42em;
+      color: var(--cream); 
+      opacity: 0.6; margin-top: 2em; 
+      line-height: 1.6; 
+      border-left: 3px solid var(--pink); padding-left: 0.8em;
+    }
     /* Responsive stacking for narrow viewports */
     @media screen and (max-width: 900px) {
       .concept-grid {
@@ -275,15 +283,16 @@
           </div>
           <h1>The <span class="accent-yellow">Antigravity</span> Machine</h1>
           <p class="subtitle">
-            Escaping Convergence and Scaffolding<br>Artistic Plurality in AI
+            Escaping Convergence Through <br>Scaffolding Artistic Plurality in AI
           </p>
           <div>
             <span class="funding-badge">AHRC + SSHRC · Doing AI Differently</span>
+               <p style="font-size:0.3em; opacity:0.25; margin-top:1em; font-family:'Space Mono',monospace; text-decoration:italic;">"You can already expect to hear talk of the computer doing the work of many artists. There would be less nonsense in this if it were put the other way around. I would gladly share the task that lies ahead with many others, who I am sure are cognizant of the problems." John Whitney, 1968.</p>
           </div>
           <p style="font-size:0.42em; opacity:0.55; margin-top:1em; font-family:'Space Mono',monospace;">
             Phoenix Perry · UK Research Lead · CCI, University of the Arts London<br>
             Stephen DiPaola · Canada Research Lead · Simon Fraser University<br>
-            <span style="opacity:0.6">Megan Boler · Ian Garrett · Charmi Patel · Matthew Plummer-Fernandez</span><br>
+            <span style="opacity:0.8">Co-leads: Megan Boler · Ian Garrett · Charmi Patel · Matthew Plummer-Fernandez</span><br>
             <span style="opacity:0.45; margin-top:0.3em; display:inline-block;">23 April 2026</span>
           </p>
         </div>
@@ -294,25 +303,26 @@
       <!-- ============================================ -->
       <section>
         <div class="prompt-tag">PROMPT 1 · WHY THIS MATTERS</div>
-        <h2 style="font-size:1.8em; line-height:1.15; margin-top:0.3em;"><span class="accent-pink">Generative AI is reshaping culture.</span><br><span style="opacity:0.5">Artists have no seat at the table.</span></h2>
+        <h2 style="font-size:1.8em; line-height:1.15; margin-top:0.3em;"><span class="accent-pink">Generative AI is reshaping culture.</span></h2>
         <div class="color-bar">
           <span style="background:var(--pink)"></span>
           <span style="background:var(--pink); opacity:0.5"></span>
           <span style="background:var(--pink); opacity:0.2"></span>
         </div>
-        <p>These systems are being embedded into creative and cultural infrastructure at speed. They are trained on massive datasets that frequently include copyrighted and culturally sensitive work without attribution or consent. They rely on weak captioning frameworks that misidentify and misrepresent cultural and historical material. And they are architecturally incapable of supporting the creative practices they claim to serve.</p>
-        <p>Popular GenAI models optimise for rapid, statistically confident, resolved outputs. They automate the very phase of creative work that matters most: the exploratory, iterative, meaning-making process through which artists develop original ideas and surface narratives that dominant culture ignores.</p>
+         <p>Artists, designers, and communities are losing their cultural voice to AI systems built to resolve rather than explore. </p> <p>Commercial prompt driven systems have reward structures pulling relentlessly toward dominant cultural attractors and away from the particular, the contested, and the marginalised.</p> 
+        <p>Optimizing for rapid, statistically confident, resolved outputs, they automate the very phase of creative work that matters most: the exploratory, interpretive, meaning-making process through which artists develop original ideas and surface marginalised narratives.</p>
         <div class="card pink" style="margin-top:0.4em">
           <p style="margin:0; font-size:0.62em;">This is not a set of separate technical problems. It is a <strong>single systemic failure</strong>, rooted in one foundational design assumption: that the purpose of AI is to <span class="accent-pink">resolve</span> rather than to <span class="accent-lime">explore</span>.</p>
-        </div>
+           
       </section>
+
 
       <!-- ============================================ -->
       <!-- SLIDE 3: SO WHAT — THE CONCRETE STAKES          -->
       <!-- ============================================ -->
       <section>
         <div class="prompt-tag">PROMPT 1 · SO WHAT</div>
-        <h2><span class="accent-red" style="color:var(--red)">The damage is compounding</span></h2>
+        <h2><span class="accent-red" style="color:var(--red)">The Slow Cancellation of the Future: <br>This damage is recursive.</span></h2>
         <div class="color-bar">
           <span style="background:var(--red)"></span>
           <span style="background:var(--red); opacity:0.5"></span>
@@ -321,21 +331,22 @@
         <div class="concept-grid">
           <div class="concept card pink">
             <div class="term accent-pink">Representation is shrinking</div>
-            <div class="def">Every model trained on the dominant web corpus compresses marginalised narratives and amplifies majority-culture defaults. The more these tools are used, the narrower the representational space becomes. Contested, complex, historically nuanced stories are being made computationally inaccessible.</div>
+            <div class="def">Every model trained on the dominant web corpus compresses marginalised narratives and amplifies majority-culture defaults. The more these tools are used, the narrower the representational space becomes. Contested, complex, historically nuanced stories are being made computationally inaccessible because they are missing from the datasets by design.</div>
           </div>
           <div class="concept card orange">
-            <div class="term accent-orange">Systemic bias is being industrialised</div>
-            <div class="def">Rigid Acceptable Use Policies and alignment training enforce a single definition of "safe" that flattens culture wholesale. This is not a guardrail. It is a mechanism for cultural homogenisation operating at scale, laundering structural inequality through statistical confidence.</div>
+            <div class="term accent-orange">Systemic bias is being productised</div>
+            <div class="def">Rigid Acceptable Use Policies and alignment training enforce a single definition of "safe," erasing cultural differences. This is not a protective guideline but rather a process that forces uniformity in culture. In the wrong hands, it acts as a type of censorship, disguising pre-existing structural inequality behind the appearance of statistical certainty. For example, I am shadowbanned on X for speaking against the stoning of LGBTQAI+ people by the Sultan of Brunei  </div>
           </div>
           <div class="concept card highlight">
             <div class="term accent-yellow">Artists are being displaced from their own practice</div>
-            <div class="def">Creative practitioners are being economically undermined by tools that were never built for them, never trained with their consent, and never designed to support their process. The tools delegate where artists need to explore. They resolve where artists need to sit with ambiguity. They are replacing creative labour, not augmenting it.</div>
+            <div class="def">GenAI resolves to an output right whereas artists need to be with the trouble (process) so they can sit with ambiguities of meaning, cultural nuance, and political systems. This stands to dramatically reduce critical inquiry.</div>
           </div>
           <div class="concept card" style="border-color:var(--red)">
-            <div class="term" style="color:var(--red)">The cost is environmental too</div>
-            <div class="def">Compute-intensive, high-resolution, single-output architectures carry an unsustainable environmental burden. And arts scholarship has been almost entirely excluded from how any of this gets designed. The people most affected have the least say.</div>
+            <div class="term" style="color:var(--red)">Unsustainable environmental damage</div>
+            <div class="def">Massive datasets lead to model training processes that can use more power than whole cities for three months. Compute-intensive architectures impose an unsustainable environmental burden.Disproportionately, these data centres are being placed in the global south, environmentally strained locations, or in rural communities. </div>
           </div>
         </div>
+        <div><p class="citation">Mark Fisher, <em>"The Slow Cancellation of the Future,"</em> <em>Ghosts of My Life: Writings on Depression, Hauntology and Lost Futures</em>, Zero Books, 2014</p></div>
       </section>
 
       <!-- ============================================ -->
@@ -349,8 +360,8 @@
           <span style="background:var(--orange); opacity:0.5"></span>
           <span style="background:var(--orange); opacity:0.2"></span>
         </div>
-        <p>Latent spaces are not flat. They are topological. They are dominated by <span class="accent-orange">gravity wells</span>: statistically dominant cultural representations and popular tropes. Write about a character named Steve and the system drifts toward Captain America fan fiction. These systems pull users into wells to ensure a "successful" output. Which really means: a <em>statistically probable</em> one.</p>
-        <div class="two-col">
+        <p>Latent spaces are not flat. They are topological. They are dominated by <span class="accent-orange">gravity wells</span>: statistically dominant cultural representations and popular tropes. Write about an artist named Whitney and the system drifts toward Whitney Houston and Pokemon fan fiction. These systems pull users into wells to ensure a "successful" output. Which really means: a <em>statistically probable</em> one.</p>
+        <!-- <div class="two-col">
           <div class="card orange">
             <div class="wp-label accent-orange">Semantic Myopia</div>
             <p style="font-size:0.5em; margin:0">Platformed AI relies on rigid Acceptable Use Policies and alignment training that fundamentally flatten culture. By enforcing universally "safe" outputs, these systems erase the margins. Contested, complex, historically nuanced narratives become computationally inaccessible.</p>
@@ -359,26 +370,30 @@
             <div class="wp-label accent-yellow">Cognitive Sovereignty</div>
             <p style="font-size:0.5em; margin:0">The current paradigm is built on delegation: the user prompts, the system takes over. This strips creators of their right to govern the trajectory, pace, and context of their creative labour. AI needs to operate as an interpretive assistant, not a mechanical delegate.</p>
           </div>
+        </div> -->
+        <div class="card orange">
+          <p style="font-size:0.5em; margin:0">We don't view gravity wells as inherently bad. They are contextual landmarks. But practitioners need mechanisms to <span class="accent-yellow">choose</span> how to engage with them or actively construct trajectories away.</p>
         </div>
-        <p style="font-size:0.5em; opacity:0.7; margin-top:0.35em;">We don't view gravity wells as inherently bad. They are contextual landmarks. But practitioners need mechanisms to <span class="accent-yellow">choose</span> whether to engage with them or actively construct trajectories away.</p>
-      </section>
+     </section>
 
       <!-- ============================================ -->
       <!-- SLIDE 4: PROMPT 2 — THE REORIENTATION          -->
       <!-- ============================================ -->
       <section>
         <div class="prompt-tag">PROMPT 2 · WHAT WE BUILD AND HOW WE DELIVER IT</div>
-        <h2><span class="accent-teal">Process over output</span></h2>
+        <h2><span class="accent-teal">Lipstick Traces: Process over output</span></h2>
         <div class="color-bar">
           <span style="background:var(--teal)"></span>
           <span style="background:var(--teal); opacity:0.5"></span>
           <span style="background:var(--teal); opacity:0.2"></span>
         </div>
-        <p>We propose a fundamental shift from output-optimised AI to <strong>process-oriented AI</strong>. We are building prototypes that scaffold the exploratory phase of creative work rather than automating it away.</p>
-        <p>Our tools make the exploratory process <span class="accent-teal">visible</span>, <span class="accent-lime">navigable</span>, and <span class="accent-yellow">slow</span>. Practitioners can test directions, surface unexpected connections, and develop projects longitudinally without convergence pressure. We reconceptualise generative AI not as a production system but as a <strong>cognitive scaffolding system</strong>.</p>
+        <p>We propose a fundamental shift from output-optimised AI to <strong>process-oriented AI</strong>. This prototype is a proof of concept scaffolding the exploratory phase of creative work rather than automating it away.</p>
+        <p>Imagine a map of relations <span class="accent-teal">as an artistic output</span>, <span class="accent-lime">navigable</span>, and <span class="accent-yellow">slow</span>. Practitioners can test directions, surface unexpected connections, and develop projects with and against convergence pressures. Generating work through a series of dataset sketches, creators reclaim their cultural, political, and storytelling roles.</p>
         <div class="card teal" style="margin-top:0.3em">
-          <p style="margin:0; font-size:0.58em;">By focusing on lightweight, modular, open architectures, we demonstrate that more <span class="accent-teal">interpretively honest</span> AI is also more <span class="accent-lime">sustainable</span> AI. Local deployment. Adaptive compute. Degrowth-compatible by design. Models that can run on a consumer GPU, not a data centre. This is a direct technical alternative to the dominant prompt-based paradigm. Not merely a critique of it.</p>
+          <p style="margin:0; font-size:0.58em;">By focusing on lightweight, modular, open architectures, we demonstrate that more <span class="accent-teal">interpretively honest</span> AI is also more <span class="accent-lime">sustainable</span> AI. We prioritise local deployment and adaptive compute.  Degrowth-compatible by design, these are models that can run on a consumer GPU, not a data centre. This is a direct technical alternative to the dominant prompt-based data harvesting paradigm of companies such as Google and OpenAI.</p>
         </div>
+        <p class="citation"> Greil Marcus, <em>Lipstick Traces: A Secret History of the Twentieth Century</em><br>
+</p>
       </section>
 
       <!-- ============================================ -->
@@ -392,12 +407,15 @@
           <span style="background:var(--yellow); opacity:0.5"></span>
           <span style="background:var(--yellow); opacity:0.2"></span>
         </div>
-        <p>This is not just an engineering project. The theoretical foundation matters. Material Engagement Theory (Malafouris) tells us that cognition does not happen solely in the head. It extends through our engagement with materials and tools. <strong>Tools shape how we think.</strong></p>
-        <p>When creative practitioners engage with AI, the tool is not neutral. If the tool is built for convergence, it shapes creative thought toward convergence. The material <em>is</em> the dataset. The machine <em>is</em> the cognitive scaffold. That means the design of the tool is a design decision about cognition itself.</p>
+        <p>The theory underpinning this research embodies Material Engagement Theory. It tells us that cognition does not happen solely in the head. It extends through our engagement with materials and tools. <strong>Tools shape how we think.</strong></p>
+        <p>When creative practitioners engage with AI, the tool is not neutral. If the tool is built for convergence, it shapes creative thought toward convergence. The material <em>is</em> the dataset. The interface <em>is</em> the cognitive scaffold.</p>
         <div class="card highlight" style="margin-top:0.3em">
-          <p style="margin:0; font-size:0.58em;">Kirsh and Maglio's concept of <span class="accent-yellow">epistemic action</span> reinforces this: actions taken not to achieve a goal directly, but to change our cognitive relationship to a problem. Sketching to discover. Moving pieces around to think. Creative practice IS epistemic action. Current AI tools collapse this by jumping straight to output. Our system restores it. Forking, journey mapping, navigating gravity wells: these are the epistemic actions through which artists think-through-the-tool.</p>
+          <p style="margin:0; font-size:0.58em;">Kirsh and Maglio's concept of <span class="accent-yellow">epistemic action</span> reinforces this: actions taken not to achieve a goal directly, but to change our cognitive relationship to a problem. Sketching to discover. Moving pieces around to think. Current AI tools collapse this by jumping straight to output. Our prototype will restore it. Through forking, journey mapping, and navigating gravity wells, we create tools for creative practice that create sticky cohesions within datasets.</p>
         </div>
-        <p style="font-size:0.5em; opacity:0.7; margin-top:0.3em;">My PhD work on InteractML explored exactly this: how embodied interaction with ML systems transforms creative cognition when artists can train models through their own movement. The Antigravity Machine extends that logic into generative AI.</p>
+
+        <p class="citation">Lambros Malafouris, <em>How Things Shape the Mind: A Theory of Material Engagement</em>, MIT Press, 2013</p>
+        <p class="citation">Golding, Johnny; Reinhart, Martin; and Paganellli, Mattia, eds. 2021. Data Loam: Sometimes Hard, Usually Soft. The Future of Knowledge Systems. Berlin/Boston: De Gruyter.</p>
+        <p class="citation">David Kirsh and Paul Maglio, <em>"On Distinguishing Epistemic from Pragmatic Action,"</em> Cognitive Science, 18(4), 513–549, 1994</p>
       </section>
 
       <!-- ============================================ -->
@@ -430,7 +448,7 @@
             <div class="def">Visualisation layer making convergence pressures legible. Showing practitioners where the system is pulling them and why. Turning an opaque statistical process into a navigational environment.</div>
           </div>
         </div>
-        <p style="font-size:0.45em; opacity:0.55; margin-top:0.3em;">Lightweight LoRA fine-tuning, adaptive compute, modular API. Consumer GPU / cloud-free local deployment.</p>
+
       </section>
 
       <!-- ============================================ -->
@@ -487,7 +505,7 @@
           </div>
         </div>
         <div class="card highlight" style="margin-top:0.4em">
-          <p style="margin:0; font-size:0.56em;"><span class="accent-yellow">How we measure success:</span> We abandon output-centric metrics. No visual fidelity scores. No prompt adherence. Success is relational and performative. Does the interaction feel like a dynamic conversation? Does interpretation of inputs let the creator hold ideas in productive ambiguity? Success is when the practitioner reports that the system <em>clarified their intent and expanded their exploratory space</em> rather than prematurely closing it.</p>
+          <p style="margin:0; font-size:0.56em;"><span class="accent-yellow">How we measure success:</span> Success is when the practitioner reports that our tools, frameworks, and guides helped them to <em>clarify their intent and expanded their exploratory space</em> rather than prematurely closing it. For example if journey maps are shared, they surface the interpretive creative processes. </p>
         </div>
       </section>
 
@@ -504,10 +522,11 @@
         </div>
        
         <ul>
+          <li><span class="accent-orange">A prototype of The AntiGravity Machine. </span> Software to allow for the real-time exploration of datasets, the creation of journey maps, and the ability to steer through datasets.</span>
           <li><span class="accent-pink">Public installation</span> co-designed with a cultural venue/festival partner. The imagination space presented as a live, navigable environment. Targeting 500+ public interactions.</li>
           <li><span class="accent-lime">Open-source practitioner toolkit</span> with documentation, tutorials, onboarding. Designed for independent artists without specialist technical support.</li>
           <li><span class="accent-teal">Minimum 3 peer-reviewed publications:</span> position paper on cognitive sovereignty, technical systems paper on anti-gravity navigation, IDEA evaluation framework.</li>
-          <li><span class="accent-yellow">Structured knowledge-sharing</span> with the other funded sandpit projects. Tools, design patterns, and evaluation methods contributed to the collective ecosystem.</li>
+          <li><span class="accent-yellow">Structured knowledge-sharing</span> with the other funded sandpit projects.</li>
         </ul>
         <div class="stats-row" style="margin-top:0.2em">
           <div><div class="big-num accent-yellow">£250k</div><div class="big-num-label">18 months · 5 institutions · UK + Canada</div></div>
@@ -519,14 +538,13 @@
       <!-- ============================================ -->
       <section>
         <div class="prompt-tag">PROMPT 3 · THE HUMANITIES-DRIVEN TECHNICAL ADVANCE</div>
-        <h2><span class="accent-teal">Humanities as generative design logic</span></h2>
+        <h2><span class="accent-teal">Philosophy and Critical Theory as generative design logic</span></h2>
         <div class="color-bar">
           <span style="background:var(--teal)"></span>
           <span style="background:var(--teal); opacity:0.5"></span>
           <span style="background:var(--teal); opacity:0.2"></span>
         </div>
-        <p>The core technical contribution is the redesign of navigation architectures in generative AI to support ambiguity, perspectival plurality, and contested representation. Rather than collapsing interpretive complexity into statistically confident single outputs.</p>
-        <p>The humanities contribution here is <strong>not</strong> post-hoc critical commentary applied after the engineering is done. It is <span class="accent-teal">foundational architectural constraint</span>.</p>
+        <p>The humanities contribution here is <strong>not</strong> post-hoc critical commentary applied after the engineering is done. It is <span class="accent-teal">foundational architectural constraint and our artistic lineage</span>. Our tools, design patterns, and evaluation methods are contributed to the collective ecosystem which are rooted in crip positionality, feminist understanding, decolonial data, queer theory, and post-captialism technology.</p>
         <div class="two-col" style="margin-top:0.2em">
           <div class="card teal">
             <p style="font-size:0.5em; margin:0"><span class="accent-teal" style="font-weight:700">Memory studies</span> provides the conceptual architecture. Selective distortion, the politics of forgetting, mnemonic plurality: these are operationalised as <em>spatial properties</em> of the latent environment and as computational design parameters. Not metaphors. Design constraints.</p>
@@ -541,7 +559,7 @@
       <!-- SLIDE 11: PROMPT 3 — TRANSDISCIPLINARY          -->
       <!-- ============================================ -->
       <section>
-        <div class="prompt-tag">PROMPT 3 · GENUINE TRANSDISCIPLINARY ENRICHMENT</div>
+        <div class="prompt-tag">PROMPT 3 · We are the Chimeras: Authentic TRANSDISCIPLINARY ENRICHMENT </div>
         <h2><span class="accent-purple">Each discipline is changed</span></h2>
         <div class="color-bar">
           <span style="background:var(--purple)"></span>
@@ -550,13 +568,13 @@
         </div>
         <p>The mutual enrichment here is bidirectional and has genuine epistemic consequence.</p>
         <div class="card teal" style="margin-top:0.2em">
-          <p style="margin:0; font-size:0.56em;"><span class="accent-teal">Technical → Humanities:</span> The implementation surfaces empirical evidence about how dominant attractors function, how communities navigate contested representational spaces, and how latent space topology encodes cultural power asymmetries. These are phenomena that are <strong>not accessible through archival or interpretive methods alone</strong>. The machine makes visible what the archive cannot.</p>
+          <p style="margin:0; font-size:0.56em;"><span class="accent-teal">Technical → Humanities:</span> The implementation surfaces empirical evidence about how dominant attractors function, how communities navigate contested representational spaces, and how latent space topology encodes political power asymmetries.</p>
         </div>
         <div class="card purple" style="margin-top:0.2em">
-          <p style="margin:0; font-size:0.56em;"><span class="accent-purple">Humanities → Technical:</span> The requirement for computational precision and testability generates new knowledge within the humanities disciplines themselves. Concepts like selective distortion and epistemic erasure become <strong>computational design constraints</strong> rather than remaining descriptive theoretical categories. The engineering changes the theory.</p>
+          <p style="margin:0; font-size:0.56em;"><span class="accent-purple">Humanities → Technical:</span> The requirement for computational precision and testability generates new knowledge within the humanities disciplines themselves. Concepts like selective distortion and epistemic erasure become <strong>computational design constraints</strong> rather than remaining descriptive theoretical categories. The software system and interface are changed by the theory.</p>
         </div>
         <div class="card highlight" style="margin-top:0.2em">
-          <p style="margin:0; font-size:0.56em;"><span class="accent-yellow">This is the test:</span> Each discipline is substantively changed by its encounter with the other. That is the condition of <strong>genuine transdisciplinary research</strong>. Not interdisciplinary collaboration in name only. Neither a humanities nor a technical AI team could achieve this independently.</p>
+          <p style="margin:0; font-size:0.56em;"><span class="accent-yellow">This is the test:</span> Each discipline is substantively changed by its encounter with the other. That is the condition of <strong>genuine transdisciplinary research</strong>. Not interdisciplinary collaboration in name only. Neither a humanities nor a technical AI team could achieve this independently. We are the Chimeras and we are distinctly positioned to see what is not apparent.</p>
         </div>
       </section>
 
@@ -597,7 +615,6 @@
             <div class="role">Canada Co-I · OISE, University of Toronto<br>Affect theory, AI literacy, feminist pedagogy</div>
           </div>
         </div>
-        <p style="font-size:0.45em; opacity:0.5; margin-top:0.35em;">Aligned with: Creators Coalition on AI · UKAI Projects · Dr Piotr Mirowski / Fabula (Google DeepMind)</p>
         <p style="font-size:0.55em; margin-top:0.5em; font-family:'Space Mono',monospace;">Process over output. Sovereignty over delegation.<br>A direct technical alternative. Not merely a critique.</p>
         <p style="font-size:0.38em; opacity:0.35; margin-top:0.5em; font-style:italic;">"This work originated in Doing AI Differently and the Artificial Intelligence Humanities Sandpit, funded by AHRC-UKRI and SSHRC."</p>
       </section>
