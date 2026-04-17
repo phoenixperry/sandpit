@@ -1656,13 +1656,12 @@
                      lifeFrac > 0.75 ? (1 - lifeFrac) / 0.25 : 1.0;
           fade = Math.max(fade, 0);
 
-          // draw trail as a short directional stroke (not a dot)
-          let alpha = fade * 120;
+          // draw trail stroke
+          let alpha = fade * 180;
           c.setAlpha(alpha);
           p.stroke(c);
-          // vary weight — thinner strokes feel more textural
-          let weight = 0.5 + fade * 0.8 + Math.sin(pt.age * 0.03 + i) * 0.3;
-          p.strokeWeight(Math.max(weight, 0.3));
+          let weight = 1.0 + fade * 1.4 + Math.sin(pt.age * 0.03 + i) * 0.5;
+          p.strokeWeight(Math.max(weight, 0.6));
 
           let dx = pt.x - pt.px;
           let dy = pt.y - pt.py;
@@ -1670,7 +1669,12 @@
             p.line(pt.px, pt.py, pt.x, pt.y);
           }
 
-          // no dot at head — just the stroke for texture
+          // dot at head — visible particle
+          p.noStroke();
+          c.setAlpha(alpha * 1.4);
+          p.fill(c);
+          let dotSz = 2.5 + fade * 2.0;
+          p.ellipse(pt.x, pt.y, dotSz, dotSz);
 
           // respawn if off-screen or too old
           if (pt.age > pt.maxAge || pt.x < -20 || pt.x > w + 20 || pt.y < -20 || pt.y > h + 20) {
@@ -1685,9 +1689,9 @@
         }
 
         // textural field marks — short dashes aligned to flow direction
-        c.setAlpha(20);
+        c.setAlpha(35);
         p.stroke(c);
-        let step = 35;
+        let step = 30;
         for (let gx = 0; gx < w; gx += step) {
           for (let gy = 0; gy < h; gy += step) {
             let v = flowNoise(gx * NOISE_SCALE, gy * NOISE_SCALE, noiseZ);
