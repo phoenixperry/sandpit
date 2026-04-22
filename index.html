@@ -389,7 +389,7 @@
       <!-- ============================================ -->
       <!-- SLIDE 3: GRAVITY WELLS + SEMANTIC MYOPIA     -->
       <!-- ============================================ -->
-      <section class="bg-sketch-slide" data-whitney="orbits" data-whitney-color="#ff9505">
+      <section class="bg-sketch-slide" data-whitney="topo-wells" data-whitney-color="#ff9505">
         <div class="whitney-bg sketch-bg"></div>
         <div class="slide-content">
         <div class="prompt-tag">PROMPT 1 · THE PROBLEM, DEEPER</div>
@@ -575,7 +575,7 @@
       <!-- ============================================ -->
       <!-- SLIDE 9: PUBLIC ENGAGEMENT + OUTPUTS          -->
       <!-- ============================================ -->
-      <section class="bg-sketch-slide" data-whitney="converge" data-whitney-color="#e91e63">
+      <section class="bg-sketch-slide" data-whitney="orbits" data-whitney-color="#ff9505">
         <div class="whitney-bg sketch-bg"></div>
         <div class="slide-content">
         <div class="prompt-tag">PROMPT 2 · DISSEMINATION + REAL-WORLD IMPACT</div>
@@ -612,7 +612,7 @@
           <span style="background:var(--teal); opacity:0.5"></span>
           <span style="background:var(--teal); opacity:0.2"></span>
         </div>
-        <p>The humanities contribution here is <strong>not</strong> post-hoc critical commentary applied after the engineering is done. It is <span class="accent-teal">foundational architectural constraint and our artistic lineage</span>. Our workshops, tools, design patterns, and evaluation methods are a collective ecosystem which are will be rooted in intersectional feminist understanding, decolonial data, queer theory, and post-captialism technology.</p>
+        <p>The humanities contribution here is <strong>not</strong> post-hoc critical commentary applied after the engineering is done. It is <span class="accent-teal">foundational architectural constraint and our artistic lineage</span>. Our workshops, tools, design patterns, and evaluation methods are a collective ecosystem which are will be rooted in intersectional feminist understanding, decolonial data, queer theory, and degrowth technology.</p>
         <!-- <div class="two-col" style="margin-top:0.2em">
           <div class="card pink">
             <p style="font-size:0.5em; margin:0"><span class="accent-pink" style="font-weight:700">Feminist and crip theory</span> are not supplementary lenses applied after the fact. They are load-bearing design constraints. The curb cut effect demonstrates that access-driven design produces better systems for everyone. Crip technoscience reframes disability not as deficit but as expertise in navigating hostile infrastructure. Feminist epistemology insists on situated knowledge: who builds the tool, from what body, under what conditions. These commitments shape our interface logic, our evaluation criteria, and our refusal to treat "universal" defaults as neutral.</p>
@@ -1051,6 +1051,7 @@
         else if (type === 'constellation') drawConstellation(col);
         else if (type === 'weather') drawWeather(col);
         else if (type === 'gravity-bodies') drawGravityBodies(col);
+        else if (type === 'topo-wells') drawTopoWells(col);
 
         t += 1;
       };
@@ -1597,6 +1598,118 @@
       }
 
       // ---------------------------------------------------
+      // TOPO-WELLS — pseudo-3D grid deformed by drifting
+      // gravitational wells. Sharp 1/r funnels, soft-clamped
+      // so they don't blow up; variable stroke/alpha for 3D feel.
+      // ---------------------------------------------------
+      const TW_GRID_SIZE = 36;        // finer mesh — resolves deep funnels
+      const TW_EXTENT = 1.25;
+      const TW_WELL_COUNT = 4;
+      const TW_TILT = 1.05;           // ~60deg — steeper so we see INTO wells
+      const TW_MAX_DEPTH = 1.1;       // soft clamp; wells asymptote to this
+      let twWells = [];
+      let twInitted = false;
+
+      function initTopoWells() {
+        twWells = [];
+        for (let i = 0; i < TW_WELL_COUNT; i++) {
+          twWells.push({
+            x: (Math.random() - 0.5) * 1.6,
+            z: (Math.random() - 0.5) * 1.6,
+            vx: (Math.random() - 0.5) * 0.0012,
+            vz: (Math.random() - 0.5) * 0.0012,
+            // mass-like strength (bigger = deeper funnel throat)
+            mass:   0.22 + Math.random() * 0.22,
+            // influence radius — smaller = sharper/narrower well
+            radius: 0.14 + Math.random() * 0.12
+          });
+        }
+        twInitted = true;
+      }
+
+      function drawTopoWells(col) {
+        if (!twInitted) initTopoWells();
+
+        let c = p.color(col);
+
+        // drift wells; bounce softly off the field edges
+        for (let k = 0; k < twWells.length; k++) {
+          let wl = twWells[k];
+          wl.x += wl.vx;
+          wl.z += wl.vz;
+          if (wl.x < -1.0 || wl.x > 1.0) wl.vx *= -1;
+          if (wl.z < -1.0 || wl.z > 1.0) wl.vz *= -1;
+        }
+
+        const gs = TW_GRID_SIZE;
+        const step = (TW_EXTENT * 2) / gs;
+        const tiltSin = Math.sin(TW_TILT);
+        const tiltCos = Math.cos(TW_TILT);
+
+        // fit-to-fill scaling: compute the actual projected extent of the
+        // tilted grid (including deepest well throat), then pick the scale
+        // that makes the grid fill whichever screen axis is the tightest.
+        // Max (rather than min) means the grid slightly overflows the other
+        // axis — the "fill the screen" look.
+        const ypMax = TW_MAX_DEPTH * tiltCos + TW_EXTENT * tiltSin; // deepest, nearest
+        const ypMin = -TW_EXTENT * tiltSin;                         // flat, farthest
+        const vSpan = ypMax - ypMin;
+        const scale = Math.max(w / (2 * TW_EXTENT), h / vSpan);
+        const cx = w * 0.5;
+        const cy = h * 0.5 - ((ypMax + ypMin) * 0.5) * scale;
+
+        // compute deformation + projected screen coord at each vertex
+        let screen = new Array(gs + 1);
+        for (let i = 0; i <= gs; i++) {
+          screen[i] = new Array(gs + 1);
+          let x = -TW_EXTENT + i * step;
+          for (let j = 0; j <= gs; j++) {
+            let z = -TW_EXTENT + j * step;
+            let y = 0;
+            for (let k = 0; k < twWells.length; k++) {
+              let wl = twWells[k];
+              let dx = x - wl.x;
+              let dz = z - wl.z;
+              let r = Math.sqrt(dx * dx + dz * dz);
+              // 1/(r+softening) — sharper funnel than gaussian,
+              // matches the classic spacetime-curvature visual
+              let softening = wl.radius * 0.35;
+              y -= wl.mass * wl.radius / (r + softening);
+            }
+            // soft tanh clamp: asymptote toward -TW_MAX_DEPTH without
+            // a hard flat floor at well centers
+            y = -TW_MAX_DEPTH * Math.tanh(-y / TW_MAX_DEPTH);
+            // rotate around X; y is negative for depth, and screen-y grows
+            // downward, so we negate y here to push wells DOWN the canvas.
+            let yp = -y * tiltCos - z * tiltSin;
+            screen[i][j] = {
+              sx: cx + x * scale,
+              sy: cy + yp * scale,
+              depth: y
+            };
+          }
+        }
+
+        // draw intersections only — no grid lines. Dots cluster and curve
+        // around the wells; the funnel shape emerges from their topology,
+        // which reads as pointillist/atmospheric rather than wireframe.
+        p.noStroke();
+        for (let i = 0; i <= gs; i++) {
+          for (let j = 0; j <= gs; j++) {
+            let v0 = screen[i][j];
+            // plateau ~90% opacity, deepest throat ~30%
+            let a  = p.map(v0.depth, -TW_MAX_DEPTH, 0,  77, 230, true);
+            // dots swell slightly at depth so wells gain mass without
+            // feeling Tron-geometric
+            let dSize = p.map(v0.depth, -TW_MAX_DEPTH, 0, 3.2, 1.4, true);
+            c.setAlpha(a);
+            p.fill(c);
+            p.ellipse(v0.sx, v0.sy, dSize, dSize);
+          }
+        }
+      }
+
+      // ---------------------------------------------------
       // WEATHER — Perlin noise flow field with drifting particles
       // like atmospheric pressure systems, wind lines, weather maps
       // ---------------------------------------------------
@@ -1887,6 +2000,9 @@
         if (config.type === 'gravity-bodies') {
           gBodies = [];
           gTrailPts = [];
+        }
+        if (config.type === 'topo-wells') {
+          twInitted = false;
         }
       };
 
