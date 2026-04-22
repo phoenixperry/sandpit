@@ -1973,7 +1973,7 @@
       // between proximate neighbors. Inspired by Generative
       // Gestaltung M_1_5_02: calm, webby, pointillist, no grid.
       // ---------------------------------------------------
-      const AN_COUNT = 48;
+      const AN_COUNT = 68;
       const AN_CONNECT_DIST = 190;    // px threshold for drawing a line
       const AN_SPEED_MIN = 0.06;
       const AN_SPEED_MAX = 0.18;
@@ -2021,7 +2021,7 @@
 
         // thin connecting lines — alpha fades with distance
         p.noFill();
-        p.strokeWeight(0.5);
+        p.strokeWeight(0.6);
         const distSqMax = AN_CONNECT_DIST * AN_CONNECT_DIST;
         for (let i = 0; i < anAgents.length; i++) {
           let ai = anAgents[i];
@@ -2032,8 +2032,9 @@
             let d2 = dx * dx + dy * dy;
             if (d2 < distSqMax) {
               let strength = 1 - Math.sqrt(d2) / AN_CONNECT_DIST;
-              // squared falloff makes the near ones crisp, distant ones ghostly
-              c.setAlpha(strength * strength * 170);
+              // gentler-than-squared falloff: distant connections stay
+              // faintly visible rather than fading to nothing
+              c.setAlpha(Math.pow(strength, 1.4) * 205);
               p.stroke(c);
               p.line(ai.x, ai.y, aj.x, aj.y);
             }
@@ -2042,10 +2043,10 @@
 
         // subtle dots — small, steady, enough to anchor each node
         p.noStroke();
-        c.setAlpha(200);
+        c.setAlpha(225);
         p.fill(c);
         for (let i = 0; i < anAgents.length; i++) {
-          p.ellipse(anAgents[i].x, anAgents[i].y, 2.2, 2.2);
+          p.ellipse(anAgents[i].x, anAgents[i].y, 2.5, 2.5);
         }
       }
 
